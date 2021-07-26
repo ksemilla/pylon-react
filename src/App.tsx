@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { observer } from 'mobx-react-lite'
 
-function App() {
+import Routes from "routes"
+
+import { getInventory } from 'api/inventory'
+import { getVendors } from 'api/vendors'
+import { useEffect } from 'react'
+
+import { useAuthStore } from 'stores/auth';
+import { useCommonStore } from 'stores/common';
+
+const App = () => {
+
+	const authContext = useAuthStore()
+	const authStore = authContext.authStore
+
+	const commonContext = useCommonStore()
+	const commonStore = commonContext.commonStore
+
+	useEffect(()=>{
+		if (authStore.isLogged) {
+
+			getInventory()
+			.then(res=>{
+				commonStore.setInventory(res.data)
+			})
+			.catch(res=>{
+				console.log("[ERROR][APP.TSX]", res.response)
+			})
+
+			getVendors()
+			.then(res=>{
+				commonStore.setVendors(res.data)
+			})
+			.catch(res=>{
+				console.log("[ERROR][APP.TSX]", res.response)
+			})
+
+		}
+	}, [authStore.isLogged, commonStore])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+		<div style={{minHeight: "100vh", display: "flex"}}>
+			<div style={{overflow: "hidden", flex: 1}}>
+				<Routes />
+			</div>
+		</div>
   );
 }
 
-export default App;
+export default observer(App)

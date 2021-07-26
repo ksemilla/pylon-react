@@ -4,9 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { AuthProvider } from "stores/auth"
+import { CommonProvider } from 'stores/common'
+
+import { ThemeProvider } from "styled-components"
+import DefaultTheme from "styles/theme"
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+		<CommonProvider>
+			<AuthProvider>
+				<ThemeProvider theme={DefaultTheme}>
+					<App />
+				</ThemeProvider>
+			</AuthProvider>
+		</CommonProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
