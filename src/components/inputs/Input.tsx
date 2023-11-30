@@ -33,7 +33,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <input
             type={type}
             className={classNames(
-              "block outline-none w-full rounded-md border-0 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400   sm:text-sm sm:leading-6 dark:bg-[#25262b] dark:ring-[#373a40] focus:ring-inset focus:ring-indigo-600 dark:focus:ring-indigo-600",
+              "block outline-none w-full rounded-md border-0 py-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 dark:bg-white/5 dark:ring-white/10 focus:ring-inset focus:ring-indigo-600 dark:focus:ring-indigo-500",
               !!leftSection ? "pl-10" : "pl-2"
             )}
             ref={ref}
