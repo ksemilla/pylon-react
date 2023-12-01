@@ -23,25 +23,25 @@ export function LoginPage() {
 
   return (
     <div className="max-w-xs m-auto">
-      <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight">
+      <h2 className="mt-10 mb-6 text-center text-2xl font-bold leading-9 tracking-tight">
         Login to your account
       </h2>
       <Form {...methods} onSubmit={mutate.mutate}>
-        <TextInput
-          autoComplete="email"
-          label="Email"
-          {...methods.register("email", { required: "Please enter email" })}
-        />
-        <TextInput
-          label="Password"
-          type="password"
-          {...methods.register("password", {
-            required: "Please enter password",
-          })}
-        />
-        <Button radius="full" loading={mutate.isPending}>
-          {mutate.isPending ? "loading" : "Submit"}
-        </Button>
+        <div className="space-y-4">
+          <TextInput
+            autoComplete="email"
+            label="Email"
+            {...methods.register("email", { required: "Please enter email" })}
+          />
+          <TextInput
+            label="Password"
+            type="password"
+            {...methods.register("password", {
+              required: "Please enter password",
+            })}
+          />
+          <Button loading={mutate.isPending}>Submit</Button>
+        </div>
       </Form>
     </div>
   )

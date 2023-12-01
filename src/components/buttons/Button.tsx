@@ -1,5 +1,6 @@
 import { classNames } from "@/lib/utils"
 import * as React from "react"
+import { Spinner } from "../Spinner"
 
 type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl"
 type ButtonVariant = "filled" | "outlined" | "soft"
@@ -75,20 +76,29 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
+    console.log(loading)
     return (
       <button
         ref={ref}
         type={type}
         className={classNames(
-          "relative shadow-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:text-gray-50 disabled:bg-gray-400/70 dark:disabled:bg-gray-400/70",
+          "relative w-full shadow-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:text-gray-50 disabled:bg-gray-400/70 dark:disabled:bg-gray-400/70",
           buttonSize(size),
           buttonVariant(variant),
-          buttonRadius(radius)
+          buttonRadius(radius),
+          loading
+            ? "bg-gray-300 text-white dark:bg-gray-300 pointer-events-none"
+            : ""
         )}
         {...props}
       >
         {leftSection}
         {children}
+        {loading && (
+          <div className="absolute inset-0 flex justify-center items-center">
+            <Spinner />
+          </div>
+        )}
       </button>
     )
   }
