@@ -3,11 +3,17 @@ import { ActionButton } from "@/components/buttons/ActionButton"
 import { Button } from "@/components/buttons/Button"
 import { Form } from "@/components/form/Form"
 import { TextInput } from "@/components/inputs/TextInput"
+import { useAuthStore } from "@/stores/auth"
 import { LoginData } from "@/types/auth"
 import { useMutation } from "@tanstack/react-query"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 
 export function LoginPage() {
+  const isLogged = useAuthStore((state) => state.isLogged)
+  const navigate = useNavigate()
+
   const methods = useForm<LoginData>()
 
   const mutate = useMutation({
@@ -22,9 +28,13 @@ export function LoginPage() {
     },
   })
 
+  useEffect(() => {
+    isLogged && navigate("/dashboard")
+  }, [isLogged])
+
   return (
     <div className="max-w-xs m-auto">
-      <h2 className="mt-10 mb-6 text-center text-2xl font-bold leading-9 tracking-tight">
+      <h2 className="pt-10 pb-6 text-center text-2xl font-bold leading-9 tracking-tight">
         Login to your account
       </h2>
       <Form {...methods} onSubmit={mutate.mutate}>
