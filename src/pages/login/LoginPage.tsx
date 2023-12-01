@@ -1,4 +1,5 @@
 import { login } from "@/api/auth"
+import { Button } from "@/components/buttons/Button"
 import { Form } from "@/components/form/Form"
 import { TextInput } from "@/components/inputs/TextInput"
 import { LoginData } from "@/types/auth"
@@ -10,7 +11,7 @@ export function LoginPage() {
 
   const mutate = useMutation({
     mutationFn: async (data: LoginData) => {
-      return login(data).then((res: any) => res.data)
+      return login(data)
     },
     onSuccess: (data) => {
       console.log("okay", data)
@@ -21,7 +22,7 @@ export function LoginPage() {
   })
 
   return (
-    <div>
+    <div className="max-w-xs m-auto">
       <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight">
         Login to your account
       </h2>
@@ -38,7 +39,9 @@ export function LoginPage() {
             required: "Please enter password",
           })}
         />
-        <button type="submit">{mutate.isPending ? "loading" : "Submit"}</button>
+        <Button radius="full" loading={mutate.isPending}>
+          {mutate.isPending ? "loading" : "Submit"}
+        </Button>
       </Form>
     </div>
   )
