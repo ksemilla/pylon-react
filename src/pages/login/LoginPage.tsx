@@ -3,6 +3,7 @@ import { ActionButton } from "@/components/buttons/ActionButton"
 import { Button } from "@/components/buttons/Button"
 import { Form } from "@/components/form/Form"
 import { TextInput } from "@/components/inputs/TextInput"
+import { useToast } from "@/components/toast/use-toast"
 import { useAuthStore } from "@/stores/auth"
 import { LoginData } from "@/types/auth"
 import { useMutation } from "@tanstack/react-query"
@@ -11,7 +12,8 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 
 export function LoginPage() {
-  const isLogged = useAuthStore((state) => state.isLogged)
+  const { isLogged, login: authStoreLogin } = useAuthStore()
+  const { toast } = useToast()
   const navigate = useNavigate()
 
   const methods = useForm<LoginData>()
@@ -21,7 +23,10 @@ export function LoginPage() {
       return login(data).then((res) => res.data)
     },
     onSuccess: (user) => {
-      console.log("okay", user)
+      authStoreLogin(user)
+      toast({
+        title: "User login!",
+      })
     },
     onError: (response) => {
       console.log("nag error", response)
@@ -56,6 +61,9 @@ export function LoginPage() {
           </ActionButton>
         </div>
       </Form>
+      <button onClick={() => toast({ title: "test", itemID: "a" })}>
+        test
+      </button>
     </div>
   )
 }
