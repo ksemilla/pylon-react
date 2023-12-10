@@ -61,9 +61,6 @@ export function LoginPage() {
           </ActionButton>
         </div>
       </Form>
-      <button onClick={() => toast({ title: "test", itemID: "a" })}>
-        test
-      </button>
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { Toaster } from "./components/toast/toaster"
 
 function App() {
   return (
-    <div className="min-h-[100vh] text-[#213547] bg-white dark:text-gray-50 dark:bg-[#1a1b1e]">
+    <div className="min-h-[100vh] text-gray-700 bg-white dark:text-gray-50 dark:bg-[#1a1b1e]">
       <Toaster />
       <RouterProvider router={router} />
     </div>
