@@ -86,7 +86,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           buttonVariant(variant),
           buttonRadius(radius),
           loading
-            ? "bg-gray-300 text-white dark:bg-gray-300 pointer-events-none"
+            ? "bg-gray-300 text-white dark:bg-gray-700 pointer-events-none"
             : ""
         )}
         {...props}

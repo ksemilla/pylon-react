@@ -32,7 +32,7 @@ const ActionButton = (props: ActionButtonProps) => {
   return (
     <div
       onMouseDown={handleMouseDown}
-      className={classNames("relative duration-50 transition", pos)}
+      className={classNames("relative duration-75 transition", pos)}
     >
       {props.children}
     </div>
