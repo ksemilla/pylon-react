@@ -2,21 +2,21 @@ import { Spinner } from "@/components/Spinner"
 import { useAuthStore } from "@/stores/auth"
 
 import { useEffect } from "react"
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom"
 import { Fragment, useState } from "react"
 import { Dialog, Menu, Transition } from "@headlessui/react"
 import {
   Bars3Icon,
-  CalendarIcon,
-  ChartPieIcon,
+  // CalendarIcon,
+  // ChartPieIcon,
   Cog6ToothIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
+  // DocumentDuplicateIcon,
+  // FolderIcon,
   HomeIcon,
   UsersIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline"
-import { ChevronDownIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid"
+import { ChevronDownIcon } from "@heroicons/react/20/solid"
 import { classNames } from "@/lib/utils"
 import { ToggleThemeButton } from "@/components/ToggleThemeButton"
 
@@ -291,7 +291,7 @@ export const BaseLayout = () => {
         </div>
 
         <div className="lg:pl-72">
-          <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+          <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 dark:border-gray-800 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
             <button
               type="button"
               className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
@@ -307,29 +307,12 @@ export const BaseLayout = () => {
               aria-hidden="true"
             />
 
-            <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-              <form className="relative flex flex-1" action="#" method="GET">
-                <label htmlFor="search-field" className="sr-only">
-                  Search
-                </label>
-                <MagnifyingGlassIcon
-                  className="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-400"
-                  aria-hidden="true"
-                />
-                <input
-                  id="search-field"
-                  className="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
-                  placeholder="Search..."
-                  type="search"
-                  name="search"
-                />
-              </form>
+            <div className="flex justify-end flex-1 gap-x-4 self-stretch lg:gap-x-6">
               <div className="flex items-center gap-x-4 lg:gap-x-6">
                 <button
                   type="button"
                   className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
                 >
-                  <span className="sr-only">View notifications</span>
                   <ToggleThemeButton />
                 </button>
 
@@ -350,7 +333,7 @@ export const BaseLayout = () => {
                     />
                     <span className="hidden lg:flex lg:items-center">
                       <span
-                        className="ml-4 text-sm font-semibold leading-6 text-gray-900"
+                        className="ml-4 text-sm font-semibold leading-"
                         aria-hidden="true"
                       >
                         Tom Cook
@@ -370,14 +353,14 @@ export const BaseLayout = () => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none dark:bg-gray-950/50">
                       {userNavigation.map((item) => (
                         <Menu.Item key={item.name}>
                           {({ active }) => (
                             <a
                               href={item.href}
                               className={classNames(
-                                active ? "bg-gray-50" : "",
+                                active ? "bg-gray-50 dark:bg-gray-800" : "",
                                 "block px-3 py-1 text-sm leading-6"
                               )}
                             >
@@ -389,7 +372,7 @@ export const BaseLayout = () => {
                       <Menu.Item>
                         <button
                           onClick={() => logout()}
-                          className="w-full px-3 py-1 text-sm text-left leading-6 hover:bg-gray-50"
+                          className="w-full px-3 py-1 text-sm text-left leading-6 hover:bg-gray-50 dark:hover:bg-gray-800"
                         >
                           Logout
                         </button>
@@ -402,7 +385,9 @@ export const BaseLayout = () => {
           </div>
 
           <main className="py-10">
-            <div className="px-4 sm:px-6 lg:px-8">{/* Your content */}</div>
+            <div className="px-4 sm:px-6 lg:px-8">
+              <Outlet />
+            </div>
           </main>
         </div>
       </div>
