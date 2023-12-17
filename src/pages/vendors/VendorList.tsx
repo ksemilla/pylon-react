@@ -5,9 +5,7 @@ export function VendorList() {
   const navigate = useNavigate()
   return (
     <div>
-      <h1 className="text-base font-semibold leading-6 text-gray-900">
-        Vendors
-      </h1>
+      <h1 className="text-base font-semibold leading-6">Vendors</h1>
       <Table
         headers={[
           { label: "Name", field: "name" },
