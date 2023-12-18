@@ -19,6 +19,7 @@ export default function Table(props: TableProps) {
               <tr>
                 {props.headers.map((h, i) => (
                   <th
+                    key={h.field}
                     scope="col"
                     className={classNames(
                       "text-left text-sm font-semibold",

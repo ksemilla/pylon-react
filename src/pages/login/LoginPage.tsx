@@ -60,6 +60,19 @@ export function LoginPage() {
             <Button loading={mutate.isPending}>Submit</Button>
           </ActionButton>
         </div>
+        <div className="flex justify-center space-y-2 mt-2">
+          <ActionButton>
+            <Button
+              onClick={() => {
+                methods.setValue("email", "test@test.com")
+                methods.setValue("password", "test")
+              }}
+              type="button"
+            >
+              Login as Test User
+            </Button>
+          </ActionButton>
+        </div>
       </Form>
     </div>
   )
