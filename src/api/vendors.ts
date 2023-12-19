@@ -13,3 +13,11 @@ export const getVendorList = (params?: { page?: number, perPage?: number }): Pro
     })
   })
 }
+
+export const getVendor = (id: number): Promise<AxiosResponse<Vendor, any>> => {
+  return apiCall((resolve, _reject) => {
+    resolve({
+      data: vendors.find(v => v.id === id)
+    })
+  })
+}
