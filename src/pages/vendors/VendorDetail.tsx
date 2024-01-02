@@ -1,4 +1,6 @@
 import { getVendor } from "@/api/vendors"
+import { Title } from "@/components/data-display/Title"
+import { Text } from "@/components/typography/Text"
 import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
 
@@ -17,8 +19,8 @@ export function VendorDetail() {
     <div>Loading...</div>
   ) : (
     <div>
-      <h1 className="font-bold text-xl">Vendor</h1>
-      {data.id}
+      <Title order={2}>{data.name}</Title>
+      <Text>Vendor ID: {data.id}</Text>
     </div>
   )
 }
