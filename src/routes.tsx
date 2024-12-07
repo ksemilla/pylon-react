@@ -2,6 +2,7 @@ import { Route, Switch } from "wouter"
 import { LoginPage } from "./views/login/Login"
 import { AuthContainer } from "./containers/authContainer"
 import { BaseContainer } from "./containers/baseContainer"
+import { HomePage } from "./views/home/Home"
 
 export function Routes() {
   return (
@@ -9,10 +10,12 @@ export function Routes() {
       <Route path="/login" component={LoginPage}></Route>
       <AuthContainer>
         <BaseContainer>
-          <Route path="/">home page</Route>
+          <Route path="/">
+            <HomePage />
+          </Route>
         </BaseContainer>
       </AuthContainer>
-      <Route>test</Route>
+      <Route>Not Found</Route>
     </Switch>
   )
 }

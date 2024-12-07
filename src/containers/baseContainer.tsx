@@ -6,6 +6,7 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
+  SidebarInset,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -31,10 +32,12 @@ export function BaseContainer({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        {children}
-      </main>
+      <SidebarInset>
+        <div className="p-4 pt-0">
+          <SidebarTrigger className="-ml-1" />
+          {children}
+        </div>
+      </SidebarInset>
     </SidebarProvider>
   )
 }
