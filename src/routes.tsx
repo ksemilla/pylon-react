@@ -13,9 +13,9 @@ export function Routes() {
           <Route path="/">
             <HomePage />
           </Route>
+          <Route>Not Found</Route>
         </BaseContainer>
       </AuthContainer>
-      <Route>Not Found</Route>
     </Switch>
   )
 }

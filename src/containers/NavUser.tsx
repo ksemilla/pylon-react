@@ -23,6 +23,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { useAuthStore } from "@/stores/auth"
 
 export function NavUser({
   user,
@@ -33,6 +34,7 @@ export function NavUser({
     avatar: string
   }
 }) {
+  const authStore = useAuthStore()
   const { isMobile } = useSidebar()
 
   return (
@@ -96,7 +98,12 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                authStore.logout()
+                localStorage.removeItem("accessToken")
+              }}
+            >
               <LogOut />
               Log out
             </DropdownMenuItem>

@@ -21,7 +21,7 @@ export function AuthContainer({ children }: { children: React.ReactNode }) {
           setLocation("/login")
         })
     }
-  }, [])
+  }, [isLogged])
 
   return <>{children}</>
 }

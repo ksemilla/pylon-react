@@ -27,6 +27,8 @@ import {
 } from "lucide-react"
 import { NavUser } from "./NavUser"
 import { TeamSwitcher } from "./TeamSwitcher"
+import { NavSecondary } from "./NavSecondary"
+import { Link } from "wouter"
 
 export function BaseContainer({ children }: { children: React.ReactNode }) {
   return (
@@ -44,48 +46,53 @@ export function BaseContainer({ children }: { children: React.ReactNode }) {
 
 const items = [
   {
+    title: "Home",
+    url: "/",
+    icon: Home,
+  },
+  {
     title: "Quotations",
-    url: "#",
+    url: "/quotations",
     icon: Home,
   },
   {
     title: "Items",
-    url: "#",
+    url: "/items",
     icon: Inbox,
   },
   {
     title: "Customers",
-    url: "#",
+    url: "/customers",
     icon: Calendar,
   },
   {
     title: "Customer Orders",
-    url: "#",
+    url: "/customer-orders",
     icon: Calendar,
   },
   {
     title: "Job Orders",
-    url: "#",
+    url: "/job-orders",
     icon: Calendar,
   },
   {
     title: "Purchase Orders",
-    url: "#",
+    url: "/purchase-orders",
     icon: Search,
   },
   {
     title: "Sales",
-    url: "#",
+    url: "/sales",
     icon: Search,
   },
   {
     title: "Invoices",
-    url: "#",
+    url: "/invoices",
     icon: Search,
   },
   {
     title: "Vendors",
-    url: "#",
+    url: "/vendors",
     icon: Settings,
   },
 ]
@@ -108,6 +115,19 @@ const teams = [
   },
 ]
 
+const adminItems = [
+  {
+    title: "Users",
+    url: "/users",
+    icon: Home,
+  },
+  {
+    title: "Entities",
+    url: "#",
+    icon: Inbox,
+  },
+]
+
 function AppSidebar() {
   const { user } = useAuthStore()
   return (
@@ -123,16 +143,17 @@ function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        <NavSecondary items={adminItems} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser
