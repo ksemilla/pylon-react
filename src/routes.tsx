@@ -10,7 +10,7 @@ export function Routes() {
   return (
     <Switch>
       <Route path="/login" component={LoginPage}></Route>
-      <Route path="/signup" component={Signup}></Route>
+      <Route path="/sign-up" component={Signup}></Route>
       <AuthContainer>
         <BaseContainer>
           <Route path="/">

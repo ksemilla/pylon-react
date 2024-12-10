@@ -43,7 +43,7 @@ export function LoginPage() {
       <Button onClick={googleLogin}>
         <GoogleIcon /> Login with Google
       </Button>
-      <Link href="/signup" className="leading-7 [&:not(:first-child)]:mt-6">
+      <Link href="/sign-up" className="leading-7 [&:not(:first-child)]:mt-6">
         Create account here
       </Link>
     </div>
