@@ -5,7 +5,7 @@ import { parseJwt } from "@/lib/utils"
 import { useAuthStore } from "@/stores/auth"
 import { User } from "@/types/users"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
-import { Redirect } from "wouter"
+import { Link, Redirect } from "wouter"
 
 export function LoginPage() {
   const authStore = useAuthStore()
@@ -43,6 +43,9 @@ export function LoginPage() {
       <Button onClick={googleLogin}>
         <GoogleIcon /> Login with Google
       </Button>
+      <Link href="/signup" className="leading-7 [&:not(:first-child)]:mt-6">
+        Create account here
+      </Link>
     </div>
   )
 }
