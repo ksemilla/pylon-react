@@ -2,8 +2,13 @@ export interface TokenResponse {
   token: string
 }
 
-export interface LoginData {
+export interface GoogleLoginData {
   accessToken: string
+}
+
+export interface LoginData {
+  email: string
+  password: string
 }
 
 export interface SignUpData {

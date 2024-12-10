@@ -1,7 +1,7 @@
 import { googleSignUp, signUp } from "@/api/auth"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { log, parseJwt } from "@/lib/utils"
+import { parseJwt } from "@/lib/utils"
 import { useAuthStore } from "@/stores/auth"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { Link, Redirect } from "wouter"
@@ -77,12 +77,15 @@ export function Signup() {
               title: "Error creating user",
               description: err.response.data.detail,
               variant: "destructive",
-              duration: 10000,
             })
           })
       })
       .catch((err) => {
-        log(err.response)
+        toast({
+          title: "Error creating user",
+          description: err.response.data.detail,
+          variant: "destructive",
+        })
       })
   }
 
