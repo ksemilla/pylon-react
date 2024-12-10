@@ -75,20 +75,6 @@ export function LoginPage() {
           variant: "destructive",
         })
       })
-    // signUp(values)
-    //   .then((res) => {
-    //     localStorage.setItem("accessToken", res.data.token)
-    //     const decoded = parseJwt(res.data.token)
-    //     authStore.setUserId((decoded?.payload as { userId: number }).userId)
-    //   })
-    //   .catch((err) => {
-    //     toast({
-    //       title: "Error creating user",
-    //       description: err.response.data.detail,
-    //       variant: "destructive",
-    //       duration: 10000,
-    //     })
-    //   })
   }
 
   const onGoogleSubmit = () => {
