@@ -2,10 +2,12 @@ import { useLocation } from "wouter"
 import { useAuthStore } from "@/stores/auth"
 import { verifyToken } from "@/api/auth"
 import { useEffect } from "react"
+import { useQuery } from "@tanstack/react-query"
+import { getUser } from "@/api/users"
 
 export function AuthContainer({ children }: { children: React.ReactNode }) {
   const [_, setLocation] = useLocation()
-  const { isLogged, login, logout } = useAuthStore()
+  const { isLogged, login, logout, userId, setUserId } = useAuthStore()
   const token = localStorage.getItem("accessToken")
   useEffect(() => {
     if (!isLogged && !token) {
@@ -13,7 +15,7 @@ export function AuthContainer({ children }: { children: React.ReactNode }) {
     } else if (!isLogged && token) {
       verifyToken(token)
         .then((res) => {
-          login(res.data)
+          setUserId(res.data.userId)
         })
         .catch(() => {
           logout()
@@ -22,6 +24,17 @@ export function AuthContainer({ children }: { children: React.ReactNode }) {
         })
     }
   }, [isLogged])
+
+  useQuery({
+    queryKey: ["user", userId],
+    enabled: !!userId,
+    queryFn: async () => {
+      return getUser(userId ?? 0).then((res) => {
+        login(res.data)
+        return res.data
+      })
+    },
+  })
 
   return <>{children}</>
 }

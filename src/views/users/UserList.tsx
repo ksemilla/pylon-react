@@ -62,7 +62,6 @@ export function UserList() {
       return userList().then((res) => res.data)
     },
   })
-  console.log(data)
 
   return (
     <Table>

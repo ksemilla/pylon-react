@@ -143,13 +143,7 @@ export function AppSidebar({ ...props }) {
         <NavSecondary items={adminItems} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
-          user={{
-            email: user?.email ?? "",
-            name: user?.email ?? "",
-            avatar: user?.picture ?? "",
-          }}
-        />
+        <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
   )

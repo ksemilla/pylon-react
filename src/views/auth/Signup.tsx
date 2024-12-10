@@ -1,11 +1,8 @@
-import { googleSignUp, login, signUp } from "@/api/auth"
-import { GoogleIcon } from "@/components/icons/GoogleIcon"
+import { googleSignUp, signUp } from "@/api/auth"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { log, parseJwt } from "@/lib/utils"
 import { useAuthStore } from "@/stores/auth"
-import { User } from "@/types/users"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { Link, Redirect } from "wouter"
 import { z } from "zod"
@@ -19,6 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { useToast } from "@/hooks/use-toast"
 
 const formSchema = z.object({
   email: z
@@ -35,6 +33,7 @@ const formSchema = z.object({
 })
 
 export function Signup() {
+  const { toast } = useToast()
   const authStore = useAuthStore()
   const auth = getAuth()
   const provider = new GoogleAuthProvider()
@@ -49,10 +48,17 @@ export function Signup() {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     signUp(values)
       .then((res) => {
-        log(res)
+        localStorage.setItem("accessToken", res.data.token)
+        const decoded = parseJwt(res.data.token)
+        authStore.setUserId((decoded?.payload as { userId: number }).userId)
       })
       .catch((err) => {
-        log(err.response)
+        toast({
+          title: "Error creating user",
+          description: err.response.data.detail,
+          variant: "destructive",
+          duration: 10000,
+        })
       })
   }
 
@@ -62,18 +68,26 @@ export function Signup() {
         const accessToken = await res.user.getIdToken()
         googleSignUp({ accessToken })
           .then((res) => {
-            console.log("res", res)
-            // localStorage.setItem("accessToken", res.data.token)
-            // const user = parseJwt(res.data.token)?.payload as User
-            // authStore.login(user)
+            localStorage.setItem("accessToken", res.data.token)
+            const decoded = parseJwt(res.data.token)
+            authStore.setUserId((decoded?.payload as { userId: number }).userId)
           })
           .catch((err) => {
-            console.log(err.response)
+            toast({
+              title: "Error creating user",
+              description: err.response.data.detail,
+              variant: "destructive",
+              duration: 10000,
+            })
           })
       })
       .catch((err) => {
         log(err.response)
       })
+  }
+
+  if (authStore.isLogged) {
+    return <Redirect to="/" />
   }
 
   return (
