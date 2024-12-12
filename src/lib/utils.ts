@@ -101,3 +101,9 @@ export function parseJwt(token: string): JwtDecoded | null {
     return null
   }
 }
+
+export const log = (data: any) => {
+  if (import.meta.env.DEV) {
+    console.log(data)
+  }
+}

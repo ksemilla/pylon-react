@@ -1,17 +1,27 @@
-import { User } from "@/types/users"
 import api from "./base"
-interface LoginData {
-  accessToken: string
-}
-
-interface LoginResponse {
-  token: string
-}
+import {
+  GoogleLoginData,
+  LoginData,
+  SignUpData,
+  TokenResponse,
+} from "@/types/auth"
 
 export const login = (data: LoginData) => {
-  return api.post<LoginResponse>("auth/", data)
+  return api.post<TokenResponse>("auth/login/", data)
+}
+
+export const googleLogin = (data: GoogleLoginData) => {
+  return api.post<TokenResponse>("auth/google-login/", data)
 }
 
 export const verifyToken = (token: string) => {
-  return api.post<User>("auth/verify/", { token })
+  return api.post<{ userId: number }>("auth/verify/", { token })
+}
+
+export const signUp = (data: SignUpData) => {
+  return api.post<TokenResponse>("auth/sign-up/", data)
+}
+
+export const googleSignUp = (data: GoogleLoginData) => {
+  return api.post<TokenResponse>("auth/google-sign-up/", data)
 }

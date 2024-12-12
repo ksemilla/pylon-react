@@ -1,5 +1,9 @@
 import { camelToSnakeCase, snakeToCamelCase } from "@/lib/utils"
-import axios, { AxiosRequestTransformer, AxiosResponseTransformer } from "axios"
+import axios, {
+  AxiosRequestConfig,
+  AxiosRequestTransformer,
+  AxiosResponseTransformer,
+} from "axios"
 
 const API_URL = import.meta.env.VITE_API_URL + "/api/"
 
@@ -19,11 +23,25 @@ const axiosInstance = axios.create({
   ],
 })
 
-const api = {
-  get: {},
+const getAccessToken = () => localStorage.getItem("accessToken")
 
-  post: <R>(url: string, data: any) => {
-    return axiosInstance.post<R>(url, data)
+const api = {
+  get: <R>(url: string, config?: AxiosRequestConfig) => {
+    return axiosInstance.get<R>(url, {
+      ...config,
+      headers: config?.headers ?? {
+        Authorization: `Bearer ${getAccessToken()}`,
+      },
+    })
+  },
+
+  post: <R>(url: string, data: any, config?: AxiosRequestConfig) => {
+    return axiosInstance.post<R>(url, data, {
+      ...config,
+      headers: config?.headers ?? {
+        Authorization: `Bearer ${getAccessToken()}`,
+      },
+    })
   },
 }
 
