@@ -1,3 +1,9 @@
+export enum UserRole {
+  SUPERUSER = "superuser",
+  ADMIN = "admin",
+  USER = "user",
+}
+
 export interface User {
   id: number
   email: string
@@ -5,4 +11,5 @@ export interface User {
   picture: string
   dateJoined: string
   firebaseUid: string
+  role: UserRole
 }

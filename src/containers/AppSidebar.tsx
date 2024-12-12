@@ -25,6 +25,7 @@ import { TeamSwitcher } from "./TeamSwitcher"
 import { Link } from "wouter"
 import { NavSecondary } from "./NavSecondary"
 import { NavUser } from "./NavUser"
+import { UserRole } from "@/types/users"
 
 const items = [
   {
@@ -140,7 +141,9 @@ export function AppSidebar({ ...props }) {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        <NavSecondary items={adminItems} className="mt-auto" />
+        {user?.role === UserRole.ADMIN && (
+          <NavSecondary items={adminItems} className="mt-auto" />
+        )}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />
