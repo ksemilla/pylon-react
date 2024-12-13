@@ -4,7 +4,9 @@ import { Loader } from "@/components/custom/loader"
 import {
   Pagination,
   PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
+  PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
@@ -19,7 +21,6 @@ import {
 } from "@/components/ui/table"
 import { DEFAULT_PAGE_SIZE } from "@/consts"
 import { useQueryParams } from "@/lib/hooks"
-import { cn } from "@/lib/utils"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
@@ -70,7 +71,7 @@ export function UserList() {
           </TableRow>
         </TableFooter>
       </Table>
-      <Pagination>
+      <Pagination className="mt-2">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
@@ -84,19 +85,15 @@ export function UserList() {
                   removeQueryParam("offset")
                 }
               }}
-              className={cn(
-                offset < DEFAULT_PAGE_SIZE
-                  ? "pointer-events-none cursor-not-allowed"
-                  : "cursor-pointer"
-              )}
+              isActive={!(offset < DEFAULT_PAGE_SIZE)}
             />
           </PaginationItem>
-          {/* <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
+          <PaginationItem>
+            <PaginationLink href="/users">1</PaginationLink>
           </PaginationItem>
           <PaginationItem>
             <PaginationEllipsis />
-          </PaginationItem> */}
+          </PaginationItem>
           <PaginationItem>
             <PaginationNext
               onClick={() => {
@@ -105,11 +102,7 @@ export function UserList() {
                   JSON.stringify(offset + DEFAULT_PAGE_SIZE)
                 )
               }}
-              // className={cn(
-              //   data.count - offset <= DEFAULT_PAGE_SIZE
-              //     ? "pointer-events-none"
-              //     : "cursor-pointer"
-              // )}
+              isActive={!(data.data.count - offset <= DEFAULT_PAGE_SIZE)}
             />
           </PaginationItem>
         </PaginationContent>
