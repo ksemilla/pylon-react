@@ -6,4 +6,5 @@ export interface ListResponse<T> {
 export interface PageOptions {
   limit: number
   offset: number
+  q?: string
 }

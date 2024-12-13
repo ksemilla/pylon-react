@@ -37,6 +37,7 @@ PaginationItem.displayName = "PaginationItem"
 
 type PaginationLinkProps = {
   isActive?: boolean
+  disabled?: boolean
 } & Pick<ButtonProps, "size"> &
   React.ComponentProps<"a">
 
@@ -44,9 +45,10 @@ const PaginationLink = ({
   className,
   isActive,
   size = "icon",
+  href = "",
+  disabled = false,
   ...props
 }: PaginationLinkProps) => {
-  const { href } = props
   return (
     <Link
       aria-current={isActive ? "page" : undefined}
@@ -55,9 +57,10 @@ const PaginationLink = ({
           variant: isActive ? "outline" : "ghost",
           size,
         }),
+        disabled ? "text-gray-500 pointer-events-none" : "",
         className
       )}
-      href={href ?? ""}
+      href={href}
       {...props}
     />
   )
