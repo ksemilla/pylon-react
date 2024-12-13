@@ -41,7 +41,7 @@ export function UserList() {
         </div>
         <div>
           <Button asChild>
-            <Link href="/users/create">
+            <Link href="~/users/create">
               Create New User{" "}
               <Plus aria-hidden="true" className="-mr-0.5 size-5" />
             </Link>

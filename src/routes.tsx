@@ -5,6 +5,8 @@ import { HomePage } from "./views/home/Home"
 import { UserList } from "./views/users/UserList"
 import { LoginPage } from "./views/auth/Login"
 import { Signup } from "./views/auth/Signup"
+import { UserCreate } from "./views/users/UserCreate"
+import { UserContainer } from "./containers/UserContainer"
 
 export function Routes() {
   return (
@@ -16,8 +18,15 @@ export function Routes() {
           <Route path="/">
             <HomePage />
           </Route>
-          <Route path="/users">
-            <UserList />
+          <Route path="/users" nest>
+            <UserContainer>
+              <Route path="/">
+                <UserList />
+              </Route>
+              <Route path="/create">
+                <UserCreate />
+              </Route>
+            </UserContainer>
           </Route>
         </BaseContainer>
       </AuthContainer>
