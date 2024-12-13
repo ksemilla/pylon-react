@@ -9,9 +9,7 @@ import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { UserTable } from "./UserTable"
 import { TablePagination } from "@/components/custom/table-pagination"
-import { Plus, Search } from "lucide-react"
-import { Link } from "wouter"
-import { Button } from "@/components/ui/button"
+import { Search } from "lucide-react"
 
 export function UserList() {
   const { getQueryParam, setQueryParam, removeQueryParam } = useQueryParams()
@@ -34,19 +32,9 @@ export function UserList() {
 
   return (
     <div>
-      <div className="flex justify-between">
-        <div className="flex w-full max-w-sm items-center space-x-2 mb-1">
-          <Search className="opacity-50" />
-          <Input onChange={(e) => setQuery(e.target.value)} />
-        </div>
-        <div>
-          <Button asChild>
-            <Link href="~/users/create">
-              Create New User{" "}
-              <Plus aria-hidden="true" className="-mr-0.5 size-5" />
-            </Link>
-          </Button>
-        </div>
+      <div className="flex w-full max-w-sm items-center space-x-2 mb-1">
+        <Search className="opacity-50" />
+        <Input onChange={(e) => setQuery(e.target.value)} />
       </div>
       {!data ? <Loader /> : <UserTable users={data?.data.items} />}
       <TablePagination
