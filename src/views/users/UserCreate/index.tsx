@@ -1,10 +1,13 @@
 import { UserForm } from "@/forms/user-form"
+import { User } from "@/types/users"
 
 export function UserCreate() {
-  const onSubmit = async () => {}
+  const onSubmit = async (values: Partial<User>) => {
+    console.log("xxxx", values)
+  }
 
   return (
-    <div>
+    <div className="max-w-md">
       <UserForm onSubmit={onSubmit} />
     </div>
   )

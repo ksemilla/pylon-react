@@ -5,13 +5,13 @@ export enum UserRole {
 }
 
 export interface User {
-  id: number
+  id?: number
   email: string
-  username: string
-  firstName: string
-  lastName: string
-  picture: string
-  dateJoined: string
-  firebaseUid: string
-  role: UserRole
+  username?: string
+  firstName?: string
+  lastName?: string
+  picture?: string
+  dateJoined?: string
+  firebaseUid?: string
+  role?: UserRole
 }
