@@ -1,12 +1,11 @@
 import { UserForm } from "@/forms/user-form"
 
 export function UserCreate() {
+  const onSubmit = async () => {}
+
   return (
     <div>
-      <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-        Create New User
-      </h4>
-      <UserForm />
+      <UserForm onSubmit={onSubmit} />
     </div>
   )
 }
