@@ -1,4 +1,8 @@
-import { camelToSnakeCase, snakeToCamelCase } from "@/lib/utils"
+import {
+  camelToSnakeCase,
+  camelToSnakeCaseFormData,
+  snakeToCamelCase,
+} from "@/lib/utils"
 import axios, {
   AxiosRequestConfig,
   AxiosRequestTransformer,
@@ -11,6 +15,9 @@ const axiosInstance = axios.create({
   baseURL: API_URL,
   transformRequest: [
     (data) => {
+      if (data instanceof FormData) {
+        return camelToSnakeCaseFormData(data)
+      }
       return camelToSnakeCase(data)
     },
     ...(axios.defaults.transformRequest as AxiosRequestTransformer[]),

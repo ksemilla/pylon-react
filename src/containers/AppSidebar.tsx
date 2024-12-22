@@ -111,7 +111,7 @@ const adminItems = [
   },
   {
     title: "Entities",
-    url: "#",
+    url: "/entities",
     icon: Inbox,
   },
 ]

@@ -7,30 +7,29 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { User } from "@/types/users"
+import { Entity } from "@/types/entity"
 
-interface UserTableProps {
-  users: User[]
+interface EntityTableProps {
+  entities: Entity[]
+  onRowClick?: (entity: Entity) => void
 }
 
-export function UserTable({ users }: UserTableProps) {
+export function EntityTable({ entities }: EntityTableProps) {
   return (
     <Table>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">ID</TableHead>
-          <TableHead>Email</TableHead>
+          <TableHead>Name</TableHead>
           <TableHead>Role</TableHead>
           <TableHead className="text-right">Is active</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {users.map((user) => (
-          <TableRow key={user.id}>
-            <TableCell className="font-medium">{user.id}</TableCell>
-            <TableCell>{user.email}</TableCell>
-            <TableCell>{user.role}</TableCell>
-            <TableCell className="text-right"></TableCell>
+        {entities.map((entity) => (
+          <TableRow key={entity.id}>
+            <TableCell className="font-medium">{entity.id}</TableCell>
+            <TableCell>{entity.name}</TableCell>
           </TableRow>
         ))}
       </TableBody>

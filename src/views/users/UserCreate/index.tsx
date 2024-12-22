@@ -2,7 +2,7 @@ import { UserForm } from "@/forms/user-form"
 import { User } from "@/types/users"
 
 export function UserCreate() {
-  const onSubmit = async (values: Partial<User>) => {
+  const onSubmit = async (values: User) => {
     console.log("xxxx", values)
   }
 

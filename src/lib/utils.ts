@@ -37,6 +37,14 @@ export function camelToSnakeCase(obj: AnyObject): AnyObject {
   return obj
 }
 
+export function camelToSnakeCaseFormData(formData: FormData) {
+  const newFormData = new FormData()
+  for (const [k, v] of formData.entries()) {
+    newFormData.append(k.replace(/([a-z])([A-Z])/g, "$1_$2").toLowerCase(), v)
+  }
+  return newFormData
+}
+
 export function snakeToCamelCase(obj: AnyObject): AnyObject {
   // Helper to convert snake_case string to camelCase
   const toCamelCase = (str: string): string =>

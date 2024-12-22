@@ -7,6 +7,9 @@ import { LoginPage } from "./views/auth/Login"
 import { Signup } from "./views/auth/Signup"
 import { UserCreate } from "./views/users/UserCreate"
 import { UserContainer } from "./containers/UserContainer"
+import { EntityContainer } from "./containers/EntityContainer"
+import { EntityCreate } from "./views/entities/EntittyCreate"
+import { EntityList } from "./views/entities/EntityList"
 
 export function Routes() {
   return (
@@ -27,6 +30,16 @@ export function Routes() {
                 <UserCreate />
               </Route>
             </UserContainer>
+          </Route>
+          <Route path="/entities" nest>
+            <EntityContainer>
+              <Route path="/">
+                <EntityList />
+              </Route>
+              <Route path="/create">
+                <EntityCreate />
+              </Route>
+            </EntityContainer>
           </Route>
         </BaseContainer>
       </AuthContainer>
