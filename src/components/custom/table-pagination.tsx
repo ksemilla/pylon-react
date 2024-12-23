@@ -31,7 +31,7 @@ export function TablePagination(props: TablePaginationProps) {
   searchParams.set("offset", (offset + DEFAULT_PAGE_SIZE).toString())
   const nextHref = `?${searchParams.toString()}`
   return (
-    <Pagination className="mt-1">
+    <Pagination>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
@@ -43,7 +43,7 @@ export function TablePagination(props: TablePaginationProps) {
           <PaginationNext
             href={props.nextHref ?? nextHref}
             disabled={
-              props.disabledNext ?? !!props.count
+              props.disabledNext ?? typeof props.count === "number"
                 ? (props.count ?? 0) - offset <= DEFAULT_PAGE_SIZE
                 : false
             }

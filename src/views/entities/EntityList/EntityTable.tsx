@@ -14,7 +14,7 @@ interface EntityTableProps {
   onRowClick?: (entity: Entity) => void
 }
 
-export function EntityTable({ entities }: EntityTableProps) {
+export function EntityTable({ entities, onRowClick }: EntityTableProps) {
   return (
     <Table>
       <TableHeader>
@@ -27,7 +27,13 @@ export function EntityTable({ entities }: EntityTableProps) {
       </TableHeader>
       <TableBody>
         {entities.map((entity) => (
-          <TableRow key={entity.id}>
+          <TableRow
+            key={entity.id}
+            onClick={() => {
+              onRowClick?.(entity)
+            }}
+            className="cursor-pointer"
+          >
             <TableCell className="font-medium">{entity.id}</TableCell>
             <TableCell>{entity.name}</TableCell>
           </TableRow>

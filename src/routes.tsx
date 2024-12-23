@@ -10,6 +10,7 @@ import { UserContainer } from "./containers/UserContainer"
 import { EntityContainer } from "./containers/EntityContainer"
 import { EntityCreate } from "./views/entities/EntittyCreate"
 import { EntityList } from "./views/entities/EntityList"
+import { UserEdit } from "./views/users/UserEdit"
 
 export function Routes() {
   return (
@@ -23,12 +24,17 @@ export function Routes() {
           </Route>
           <Route path="/users" nest>
             <UserContainer>
-              <Route path="/">
-                <UserList />
-              </Route>
-              <Route path="/create">
-                <UserCreate />
-              </Route>
+              <Switch>
+                <Route path="/">
+                  <UserList />
+                </Route>
+                <Route path="/create">
+                  <UserCreate />
+                </Route>
+                <Route path=":id">
+                  <UserEdit />
+                </Route>
+              </Switch>
             </UserContainer>
           </Route>
           <Route path="/entities" nest>

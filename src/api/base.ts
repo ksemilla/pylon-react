@@ -50,6 +50,15 @@ const api = {
       },
     })
   },
+
+  put: <R>(url: string, data: any, config?: AxiosRequestConfig) => {
+    return axiosInstance.put<R>(url, data, {
+      ...config,
+      headers: config?.headers ?? {
+        Authorization: `Bearer ${getAccessToken()}`,
+      },
+    })
+  },
 }
 
 export default api

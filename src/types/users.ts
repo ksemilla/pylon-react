@@ -13,5 +13,5 @@ export interface User {
   picture?: string
   dateJoined?: string
   firebaseUid?: string
-  role?: UserRole
+  role: UserRole
 }

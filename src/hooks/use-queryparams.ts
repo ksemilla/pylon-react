@@ -25,5 +25,30 @@ export const useQueryParams = () => {
     }
   }
 
-  return { getQueryParam, setQueryParam, removeQueryParam }
+  const setBaseQuery = ({
+    set,
+    remove,
+  }: {
+    set?: { key: string; value: string }[]
+    remove?: string[]
+  }): void => {
+    const searchParams = new URLSearchParams(searchString)
+    set?.forEach(({ key, value }) => {
+      if (value) {
+        searchParams.set(key, value)
+      } else {
+        searchParams.delete(key)
+      }
+    })
+    remove?.forEach((key) => {
+      searchParams.delete(key)
+    })
+    if (searchParams.size === 0) {
+      setLocation("")
+    } else {
+      setLocation(`${location.split("?")[0]}?${searchParams.toString()}`)
+    }
+  }
+
+  return { getQueryParam, setQueryParam, removeQueryParam, setBaseQuery }
 }

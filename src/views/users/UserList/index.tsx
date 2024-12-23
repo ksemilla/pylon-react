@@ -1,21 +1,21 @@
 import { userList } from "@/api/users"
 import { ErrorMessage } from "@/components/custom/error"
 import { Loader } from "@/components/custom/loader"
-import { Input } from "@/components/ui/input"
 import { DEFAULT_PAGE_SIZE } from "@/consts"
-import { useDebounce } from "@/hooks/use-debounce"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { UserTable } from "./UserTable"
 import { TablePagination } from "@/components/custom/table-pagination"
-import { Search } from "lucide-react"
 import { useQueryParams } from "@/hooks/use-queryparams"
+import { UserSearch } from "./UserSearch"
+import { User } from "@/types/users"
+import { useLocation } from "wouter"
 
 export function UserList() {
-  const { getQueryParam, setQueryParam, removeQueryParam } = useQueryParams()
+  const [_, setLocation] = useLocation()
+  const { getQueryParam } = useQueryParams()
   const offset = parseInt(getQueryParam("offset") ?? "0")
-  const queryParam = getQueryParam("q") ?? ""
-  const [q, setQuery] = useDebounce<string>(queryParam)
+  const q = getQueryParam("q") ?? ""
 
   const { data, error } = useQuery({
     queryKey: ["users", DEFAULT_PAGE_SIZE, offset, q],
@@ -23,6 +23,10 @@ export function UserList() {
       return userList({ limit: DEFAULT_PAGE_SIZE, offset, q })
     },
   })
+
+  const onRowClick = (user: User) => {
+    setLocation(`/${JSON.stringify(user.id)}`)
+  }
 
   if (axios.isAxiosError(error)) {
     return (
@@ -32,22 +36,16 @@ export function UserList() {
 
   return (
     <div>
-      <div className="flex w-full max-w-sm items-center space-x-2 mb-1">
-        <Search className="opacity-50" />
-        <Input
-          defaultValue={queryParam}
-          onChange={(e) => {
-            setQuery(e.target.value)
-            if (e.target.value) {
-              setQueryParam("q", e.target.value)
-            } else {
-              removeQueryParam("q")
-            }
-          }}
+      <UserSearch />
+      {!data ? (
+        <Loader />
+      ) : (
+        <UserTable
+          users={data?.data.items}
+          onRowClick={onRowClick}
+          pagination={<TablePagination count={data?.data.count} />}
         />
-      </div>
-      {!data ? <Loader /> : <UserTable users={data?.data.items} />}
-      <TablePagination count={data?.data.count} />
+      )}
     </div>
   )
 }
