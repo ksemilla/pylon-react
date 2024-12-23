@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { ButtonProps, buttonVariants } from "@/components/ui/button"
+import { Link } from "wouter"
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
@@ -36,6 +37,7 @@ PaginationItem.displayName = "PaginationItem"
 
 type PaginationLinkProps = {
   isActive?: boolean
+  disabled?: boolean
 } & Pick<ButtonProps, "size"> &
   React.ComponentProps<"a">
 
@@ -43,20 +45,26 @@ const PaginationLink = ({
   className,
   isActive,
   size = "icon",
+  href = "",
+  disabled = false,
   ...props
-}: PaginationLinkProps) => (
-  <a
-    aria-current={isActive ? "page" : undefined}
-    className={cn(
-      buttonVariants({
-        variant: isActive ? "outline" : "ghost",
-        size,
-      }),
-      className
-    )}
-    {...props}
-  />
-)
+}: PaginationLinkProps) => {
+  return (
+    <Link
+      aria-current={isActive ? "page" : undefined}
+      className={cn(
+        buttonVariants({
+          variant: isActive ? "outline" : "ghost",
+          size,
+        }),
+        disabled ? "text-gray-500 pointer-events-none" : "",
+        className
+      )}
+      href={href}
+      {...props}
+    />
+  )
+}
 PaginationLink.displayName = "PaginationLink"
 
 const PaginationPrevious = ({
