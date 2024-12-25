@@ -1,6 +1,6 @@
 import { Route, Switch } from "wouter"
-import { AuthContainer } from "./containers/authContainer"
-import { BaseContainer } from "./containers/baseContainer"
+import { AuthContainer } from "./containers/AuthContainer"
+import { BaseContainer } from "./containers/BaseContainer"
 import { HomePage } from "./views/home/Home"
 import { UserList } from "./views/users/UserList"
 import { LoginPage } from "./views/auth/Login"
