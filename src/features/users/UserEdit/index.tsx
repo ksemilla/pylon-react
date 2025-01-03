@@ -33,8 +33,6 @@ export function UserEdit() {
     mutate(user)
   }
 
-  console.log(data?.data)
-
   if (axios.isAxiosError(error)) {
     return (
       <ErrorMessage title="Error" messages={[error.response?.data.detail]} />

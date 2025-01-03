@@ -9,8 +9,10 @@ import { ErrorMessage } from "@/components/custom/error"
 import { useQueryParams } from "@/hooks/use-queryparams"
 import { DEFAULT_PAGE_SIZE } from "@/consts"
 import { Entity } from "@/types/entity"
+import { useLocation } from "wouter"
 
 export function EntityList() {
+  const [_, setLocation] = useLocation()
   const { getQueryParam } = useQueryParams()
   const offset = parseInt(getQueryParam("offset") ?? "0")
   const q = getQueryParam("q") ?? ""
@@ -18,14 +20,14 @@ export function EntityList() {
   const { data, error } = useQuery({
     queryKey: ["entities", DEFAULT_PAGE_SIZE, offset, q],
     queryFn: async () => {
-      return entityList()
+      return entityList({ limit: DEFAULT_PAGE_SIZE, offset, q })
     },
   })
 
   const onRowClick = (entity: Entity) => {
-    console.log(entity)
+    setLocation(`/${entity.id}`)
   }
-
+  console.log(data)
   if (axios.isAxiosError(error)) {
     return (
       <ErrorMessage title="Error" messages={[error.response?.data.detail]} />
