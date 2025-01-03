@@ -7,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { cn } from "@/lib/utils"
 import { Entity } from "@/types/entity"
 
 interface EntityTableProps {
@@ -21,18 +22,19 @@ export function EntityTable({ entities, onRowClick }: EntityTableProps) {
         <TableRow>
           <TableHead className="w-[100px]">ID</TableHead>
           <TableHead>Name</TableHead>
-          <TableHead>Role</TableHead>
-          <TableHead className="text-right">Is active</TableHead>
+          {/* <TableHead className="text-right">Is active</TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>
         {entities.map((entity) => (
           <TableRow
             key={entity.id}
+            className={cn(
+              onRowClick ? "cursor-pointer" : "pointer-events-none"
+            )}
             onClick={() => {
               onRowClick?.(entity)
             }}
-            className="cursor-pointer"
           >
             <TableCell className="font-medium">{entity.id}</TableCell>
             <TableCell>{entity.name}</TableCell>
@@ -41,7 +43,7 @@ export function EntityTable({ entities, onRowClick }: EntityTableProps) {
       </TableBody>
       <TableFooter>
         <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
+          <TableCell>Total</TableCell>
           <TableCell className="text-right">$2,500.00</TableCell>
         </TableRow>
       </TableFooter>

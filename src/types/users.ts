@@ -1,11 +1,12 @@
+import { Resource } from "./core"
+
 export enum UserRole {
   SUPERUSER = "superuser",
   ADMIN = "admin",
   USER = "user",
 }
 
-export interface User {
-  id?: number
+export type User = Resource<{
   email: string
   username?: string
   firstName?: string
@@ -13,5 +14,6 @@ export interface User {
   picture?: string
   dateJoined?: string
   firebaseUid?: string
-  role: UserRole
-}
+  role: `${UserRole}`
+  isActive: boolean
+}>
