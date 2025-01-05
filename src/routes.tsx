@@ -1,16 +1,17 @@
 import { Route, Switch } from "wouter"
-import { AuthContainer } from "./containers/authContainer"
-import { BaseContainer } from "./containers/baseContainer"
-import { HomePage } from "./views/home/Home"
-import { UserList } from "./views/users/UserList"
-import { LoginPage } from "./views/auth/Login"
-import { Signup } from "./views/auth/Signup"
-import { UserCreate } from "./views/users/UserCreate"
+import { AuthContainer } from "./containers/AuthContainer"
+import { BaseContainer } from "./containers/BaseContainer"
+import { HomePage } from "./features/home/Home"
+import { UserList } from "./features/users/UserList"
+import { LoginPage } from "./features/auth/login/components/login-page"
+import { Signup } from "./features/auth/signup"
+import { UserCreate } from "./features/users/UserCreate"
 import { UserContainer } from "./containers/UserContainer"
 import { EntityContainer } from "./containers/EntityContainer"
-import { EntityCreate } from "./views/entities/EntittyCreate"
-import { EntityList } from "./views/entities/EntityList"
-import { UserEdit } from "./views/users/UserEdit"
+import { EntityCreate } from "./features/entities/EntittyCreate"
+import { EntityList } from "./features/entities/EntityList"
+import { UserEdit } from "./features/users/UserEdit"
+import { EntityEdit } from "./features/entities/EntityEdit"
 
 export function Routes() {
   return (
@@ -39,12 +40,17 @@ export function Routes() {
           </Route>
           <Route path="/entities" nest>
             <EntityContainer>
-              <Route path="/">
-                <EntityList />
-              </Route>
-              <Route path="/create">
-                <EntityCreate />
-              </Route>
+              <Switch>
+                <Route path="/">
+                  <EntityList />
+                </Route>
+                <Route path="/create">
+                  <EntityCreate />
+                </Route>
+                <Route path=":id">
+                  <EntityEdit />
+                </Route>
+              </Switch>
             </EntityContainer>
           </Route>
         </BaseContainer>

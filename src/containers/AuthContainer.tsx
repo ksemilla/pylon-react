@@ -35,6 +35,6 @@ export function AuthContainer({ children }: { children: React.ReactNode }) {
       })
     },
   })
-
+  console.log("auth container")
   return <>{children}</>
 }

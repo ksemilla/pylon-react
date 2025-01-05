@@ -19,10 +19,10 @@ interface EntityForm {
 }
 
 const formEntitySchema = z.object({
-  name: z.string(),
+  name: z.string().min(1, { message: "This is required" }),
   slug: z.string(),
-  photo: z.instanceof(FileList).optional(),
-  icon: z.instanceof(FileList).optional(),
+  // photo: z.instanceof(FileList),
+  // icon: z.instanceof(FileList),
 })
 
 export function EntityForm(props: EntityForm) {
@@ -34,18 +34,18 @@ export function EntityForm(props: EntityForm) {
     },
   })
 
-  const photoRef = form.register("photo")
-  const iconRef = form.register("icon")
+  // const photoRef = form.register("photo")
+  // const iconRef = form.register("icon")
 
   const onSubmit = (values: z.infer<typeof formEntitySchema>) => {
     const formData = new FormData()
     formData.append("name", values.name)
-    if (values.photo) {
-      formData.append("photo", values.photo[0])
-    }
-    if (values.icon) {
-      formData.append("icon", values.icon[0])
-    }
+    // if (values.photo) {
+    //   formData.append("photo", values.photo[0])
+    // }
+    // if (values.icon) {
+    //   formData.append("icon", values.icon[0])
+    // }
     props.onSubmit(formData)
   }
 
@@ -65,24 +65,20 @@ export function EntityForm(props: EntityForm) {
             </FormItem>
           )}
         />
-        <FormItem>
+        {/* <FormItem>
           <FormLabel>Photo</FormLabel>
           <FormControl>
-            <Input
-              type="file"
-              {...photoRef}
-              // onChange={(e) => form.setValue("photo", e.target.files?.[0])}
-            />
+            <Input type="file" {...photoRef} />
           </FormControl>
           <FormMessage />
-        </FormItem>
-        <FormItem>
+        </FormItem> */}
+        {/* <FormItem>
           <FormLabel>Icon</FormLabel>
           <FormControl>
             <Input type="file" {...iconRef} />
           </FormControl>
           <FormMessage />
-        </FormItem>
+        </FormItem> */}
         <Button>Create</Button>
       </form>
     </Form>

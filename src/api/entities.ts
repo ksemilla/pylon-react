@@ -8,12 +8,21 @@ export const entityList = (pageOptions?: PageOptions) => {
   })
 }
 
-// export const getUser = (id: number) => {
-//   return api.get<User>(`users/${id}/`)
-// }
+export const getEntity = (id: number) => {
+  return api.get<Entity>(`entities/${id}/`)
+}
 
 export const createEntity = (data: FormData) => {
   return api.post<Entity>(`entities/`, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  })
+}
+
+export const editEntity = (id: number, data: FormData) => {
+  return api.put<Entity>(`entities/${id}/`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

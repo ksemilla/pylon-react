@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge"
 import {
   Table,
   TableBody,
@@ -25,7 +26,7 @@ export function UserTable({ users, onRowClick, pagination }: UserTableProps) {
             <TableHead className="w-[100px]">ID</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
-            <TableHead className="text-right">Is active</TableHead>
+            <TableHead className="text-right">Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -42,7 +43,11 @@ export function UserTable({ users, onRowClick, pagination }: UserTableProps) {
               <TableCell className="font-medium">{user.id}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.role}</TableCell>
-              <TableCell className="text-right"></TableCell>
+              <TableCell className="text-right">
+                <Badge variant={user.isActive ? "default" : "outline"}>
+                  {user.isActive ? "ACTIVE" : "INACTIVE"}
+                </Badge>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
