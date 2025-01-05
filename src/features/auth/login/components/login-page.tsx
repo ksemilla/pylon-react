@@ -214,7 +214,6 @@ export function LoginPage2() {
 }
 
 export function LoginPage() {
-  const [_, setLocation] = useLocation()
   const onSubmit = () => {}
 
   return (
