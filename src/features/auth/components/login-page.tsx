@@ -29,12 +29,8 @@ export function LoginPage() {
         v.email,
         v.password
       )
-      console.log(firebaseRes)
-
       const accessToken = await firebaseRes.user.getIdToken()
-
       const apiRes = await googleLogin({ accessToken })
-
       localStorage.setItem("accessToken", apiRes.data.token)
       const decoded = parseJwt(apiRes.data.token)
       authStore.setUserId((decoded?.payload as { userId: number }).userId)
