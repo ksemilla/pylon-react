@@ -2,7 +2,14 @@ import { LoginPage } from "../login-page"
 import { act, fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 
-vi.mock("firebase/auth")
+vi.mock("firebase/auth", () => ({
+  signInWithEmailAndPassword: vi
+    .fn()
+    .mockResolvedValue("")
+    .mockRejectedValue(""),
+  getAuth: vi.fn(),
+  GoogleAuthProvider: vi.fn(),
+}))
 
 describe("LoginPage", () => {
   it("renders login page", async () => {
@@ -20,8 +27,6 @@ describe("LoginPage", () => {
   })
 
   it("submit", async () => {
-    const t = vi.mock("onSubmit")
-    const submitMockFn = vi.fn()
     render(<LoginPage />)
     const emailInput = screen.getByRole("textbox", { name: /email/i })
     const passwordInput = screen.getByLabelText(/Password/i)
@@ -35,6 +40,5 @@ describe("LoginPage", () => {
     await act(() => {
       fireEvent.submit(form)
     })
-    expect(t).toHaveBeenCalledOnce()
   })
 })

@@ -2,16 +2,61 @@ import { googleLogin } from "@/api/auth"
 import { Button } from "@/components/ui/button"
 import { parseJwt } from "@/lib/utils"
 import { useAuthStore } from "@/stores/auth"
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  AuthError,
+} from "firebase/auth"
 import { Link, useLocation } from "wouter"
 
 import { useToast } from "@/hooks/use-toast"
 import { GoogleIcon } from "@/components/icons/GoogleIcon"
-import { LoginForm } from "./login-form"
+import { formSchema, LoginForm } from "./login-form"
+import { z } from "zod"
+import axios from "axios"
 
 export function LoginPage() {
-  const onSubmit = (v: any) => {
-    console.log(v)
+  const { toast } = useToast()
+  const authStore = useAuthStore()
+  const auth = getAuth()
+  const [_, setLocation] = useLocation()
+  const onSubmit = async (v: z.infer<typeof formSchema>) => {
+    try {
+      const firebaseRes = await signInWithEmailAndPassword(
+        auth,
+        v.email,
+        v.password
+      )
+      console.log(firebaseRes)
+
+      const accessToken = await firebaseRes.user.getIdToken()
+
+      const apiRes = await googleLogin({ accessToken })
+
+      localStorage.setItem("accessToken", apiRes.data.token)
+      const decoded = parseJwt(apiRes.data.token)
+      authStore.setUserId((decoded?.payload as { userId: number }).userId)
+      setLocation("/")
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        toast({
+          title: "Error logging in",
+          description: err.response?.data.detail,
+          variant: "destructive",
+        })
+      } else {
+        toast({
+          title: "Error logging in",
+          description:
+            (err as AuthError).code === "auth/invalid-credential"
+              ? "Invalid credentials"
+              : "",
+          variant: "destructive",
+        })
+      }
+    }
   }
 
   return (
