@@ -1,5 +1,5 @@
 import { LoginPage } from "../login-page"
-import { render, screen } from "@testing-library/react"
+import { act, fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 
 vi.mock("firebase/auth")
@@ -20,21 +20,21 @@ describe("LoginPage", () => {
   })
 
   it("submit", async () => {
-    // vi.mock("onSubmit")
-    // const submitMockFn = vi.fn()
-    // render(<LoginPage />)
-    // const emailInput = screen.getByRole("textbox", { name: /email/i })
-    // const passwordInput = screen.getByLabelText(/Password/i)
-    // const form = screen.getByRole("form", { name: "form" })
-    // fireEvent.change(emailInput, {
-    //   target: { value: "test@test.com" },
-    // })
-    // fireEvent.change(passwordInput, {
-    //   target: { value: "testtest" },
-    // })
-    // await act(() => {
-    //   fireEvent.submit(form)
-    // })
-    // expect(submitMockFn).toHaveBeenCalledOnce()
+    const t = vi.mock("onSubmit")
+    const submitMockFn = vi.fn()
+    render(<LoginPage />)
+    const emailInput = screen.getByRole("textbox", { name: /email/i })
+    const passwordInput = screen.getByLabelText(/Password/i)
+    const form = screen.getByRole("form", { name: "form" })
+    fireEvent.change(emailInput, {
+      target: { value: "test@test.com" },
+    })
+    fireEvent.change(passwordInput, {
+      target: { value: "testtest" },
+    })
+    await act(() => {
+      fireEvent.submit(form)
+    })
+    expect(t).toHaveBeenCalledOnce()
   })
 })
