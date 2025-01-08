@@ -4,14 +4,14 @@ import { Loader } from "@/components/custom/loader"
 import { DEFAULT_PAGE_SIZE } from "@/consts"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-import { UserTable } from "./UserTable"
 import { TablePagination } from "@/components/custom/table-pagination"
 import { useQueryParams } from "@/hooks/use-queryparams"
-import { UserSearch } from "./UserSearch"
 import { User } from "@/types/users"
 import { useLocation } from "wouter"
+import { UserSearch } from "./user-search"
+import { UserTable } from "./user-table"
 
-export function UserList() {
+export function UserListPage() {
   const [_, setLocation] = useLocation()
   const { getQueryParam } = useQueryParams()
   const offset = parseInt(getQueryParam("offset") ?? "0")
