@@ -2,7 +2,6 @@ import { Route, Switch } from "wouter"
 import { AuthContainer } from "@/containers/AuthContainer"
 import { BaseContainer } from "@/containers/BaseContainer"
 import { HomePage } from "@/features/home/Home"
-import { UserList } from "@/features/users/UserList"
 import { LoginPage } from "@/features/auth/components/login-page"
 import { UserCreate } from "@/features/users/UserCreate"
 import { UserContainer } from "@/containers/UserContainer"
@@ -12,6 +11,7 @@ import { EntityList } from "@/features/entities/EntityList"
 import { UserEdit } from "@/features/users/UserEdit"
 import { EntityEdit } from "@/features/entities/EntityEdit"
 import { SignupPage } from "@/features/auth/components/sign-up-page"
+import { UserListPage } from "@/features/users/components/user-list"
 
 export function Routes() {
   return (
@@ -27,7 +27,7 @@ export function Routes() {
             <UserContainer>
               <Switch>
                 <Route path="/">
-                  <UserList />
+                  <UserListPage />
                 </Route>
                 <Route path="/create">
                   <UserCreate />
