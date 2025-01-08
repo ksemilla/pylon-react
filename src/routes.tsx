@@ -1,23 +1,23 @@
 import { Route, Switch } from "wouter"
-import { AuthContainer } from "./containers/AuthContainer"
-import { BaseContainer } from "./containers/BaseContainer"
-import { HomePage } from "./features/home/Home"
-import { UserList } from "./features/users/UserList"
-import { LoginPage } from "./features/auth/components/login-page"
-import { Signup } from "./features/auth/signup"
-import { UserCreate } from "./features/users/UserCreate"
-import { UserContainer } from "./containers/UserContainer"
-import { EntityContainer } from "./containers/EntityContainer"
-import { EntityCreate } from "./features/entities/EntittyCreate"
-import { EntityList } from "./features/entities/EntityList"
-import { UserEdit } from "./features/users/UserEdit"
-import { EntityEdit } from "./features/entities/EntityEdit"
+import { AuthContainer } from "@/containers/AuthContainer"
+import { BaseContainer } from "@/containers/BaseContainer"
+import { HomePage } from "@/features/home/Home"
+import { UserList } from "@/features/users/UserList"
+import { LoginPage } from "@/features/auth/components/login-page"
+import { UserCreate } from "@/features/users/UserCreate"
+import { UserContainer } from "@/containers/UserContainer"
+import { EntityContainer } from "@/containers/EntityContainer"
+import { EntityCreate } from "@/features/entities/EntittyCreate"
+import { EntityList } from "@/features/entities/EntityList"
+import { UserEdit } from "@/features/users/UserEdit"
+import { EntityEdit } from "@/features/entities/EntityEdit"
+import { SignupPage } from "@/features/auth/components/sign-up-page"
 
 export function Routes() {
   return (
     <Switch>
       <Route path="/login" component={LoginPage}></Route>
-      <Route path="/sign-up" component={Signup}></Route>
+      <Route path="/sign-up" component={SignupPage}></Route>
       <AuthContainer>
         <BaseContainer>
           <Route path="/">
