@@ -174,4 +174,16 @@ describe("LoginPage", () => {
     expect(googleLogin).toHaveBeenCalledOnce()
     expect(toast).toHaveBeenCalledOnce()
   })
+
+  it("redirect to sign up page", async () => {
+    render(<LoginPage />)
+
+    const link = screen.getByText("No account yet? Create here.")
+    expect(link).toBeInTheDocument()
+    await act(() => {
+      fireEvent.click(link)
+    })
+
+    expect(window.location.pathname).toBe("/sign-up")
+  })
 })
