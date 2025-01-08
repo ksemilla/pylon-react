@@ -6,19 +6,25 @@ import { googleLogin } from "@/api/auth"
 import { parseJwt } from "@/lib/utils"
 import * as AuthStore from "@/stores/auth"
 import * as Wouter from "wouter"
+import * as Toast from "@/hooks/use-toast"
 
 vi.mock("firebase/auth", () => ({
-  signInWithEmailAndPassword: vi.fn().mockImplementationOnce(() => ({
-    user: {
-      getIdToken: () => "abc123",
-    },
-  })),
+  signInWithEmailAndPassword: vi
+    .fn()
+    .mockImplementationOnce(() => ({
+      user: {
+        getIdToken: () => "abc123",
+      },
+    }))
+    .mockImplementationOnce(() => {
+      throw new Error("noice")
+    }),
   getAuth: vi.fn(),
   GoogleAuthProvider: vi.fn(),
 }))
 
 vi.mock("@/api/auth", () => ({
-  googleLogin: vi.fn().mockImplementation(() => ({
+  googleLogin: vi.fn().mockImplementationOnce(() => ({
     data: {
       token: "test-token",
     },
@@ -39,6 +45,14 @@ vi.mock("wouter", async () => {
   return {
     ...actual,
     useLocation: () => ["login", vi.fn()],
+  }
+})
+
+vi.mock("@/hooks/use-toast", async () => {
+  const actual = await vi.importActual<typeof Toast>("@/hooks/use-toast")
+  return {
+    ...actual,
+    useToast: () => ({ toast: vi.fn() }),
   }
 })
 
@@ -102,5 +116,62 @@ describe("LoginPage", () => {
     expect(setUserId).toHaveBeenCalledWith(1)
     expect(mockSetLocation).toHaveBeenCalledOnce()
     expect(mockSetLocation).toHaveBeenCalledWith("/")
+  })
+
+  it("submit fail - firebase auth", async () => {
+    const toast = vi.fn()
+    const useToastSpy = vi.spyOn(Toast, "useToast")
+    useToastSpy.mockReturnValue({
+      toast,
+      dismiss: vi.fn(),
+      toasts: [],
+    })
+
+    render(<LoginPage />)
+
+    const emailInput = screen.getByRole("textbox", { name: /email/i })
+    const passwordInput = screen.getByLabelText(/Password/i)
+    const form = screen.getByRole("form", { name: "form" })
+    fireEvent.change(emailInput, {
+      target: { value: "test1@test.com" },
+    })
+    fireEvent.change(passwordInput, {
+      target: { value: "testtest" },
+    })
+    await act(() => {
+      fireEvent.submit(form)
+    })
+
+    expect(signInWithEmailAndPassword).toHaveBeenCalledTimes(2)
+    expect(toast).toHaveBeenCalledOnce()
+  })
+
+  it("submit fail - api google login", async () => {
+    const toast = vi.fn()
+    const useToastSpy = vi.spyOn(Toast, "useToast")
+    useToastSpy.mockReturnValue({
+      toast,
+      dismiss: vi.fn(),
+      toasts: [],
+    })
+
+    render(<LoginPage />)
+
+    const emailInput = screen.getByRole("textbox", { name: /email/i })
+    const passwordInput = screen.getByLabelText(/Password/i)
+    const form = screen.getByRole("form", { name: "form" })
+    fireEvent.change(emailInput, {
+      target: { value: "test1@test.com" },
+    })
+    fireEvent.change(passwordInput, {
+      target: { value: "testtest" },
+    })
+    await act(() => {
+      fireEvent.submit(form)
+    })
+
+    expect(signInWithEmailAndPassword).toHaveBeenCalledTimes(3)
+    expect(googleLogin).toHaveBeenCalledOnce()
+    expect(toast).toHaveBeenCalledOnce()
   })
 })
