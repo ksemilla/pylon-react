@@ -1,13 +1,13 @@
 import { editUser, getUser } from "@/api/users"
 import { ErrorMessage } from "@/components/custom/error"
 import { Loader } from "@/components/custom/loader"
-import { UserForm } from "@/forms/user-form"
+import { UserForm } from "./user-form"
 import { User } from "@/types/users"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useParams } from "wouter"
 
-export function UserEdit() {
+export function UserEditPage() {
   const { id = "0" } = useParams()
 
   const { data, error } = useQuery({

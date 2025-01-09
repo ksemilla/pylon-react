@@ -3,15 +3,15 @@ import { AuthContainer } from "@/containers/AuthContainer"
 import { BaseContainer } from "@/containers/BaseContainer"
 import { HomePage } from "@/features/home/Home"
 import { LoginPage } from "@/features/auth/components/login-page"
-import { UserCreate } from "@/features/users/UserCreate"
 import { UserContainer } from "@/containers/UserContainer"
 import { EntityContainer } from "@/containers/EntityContainer"
 import { EntityCreate } from "@/features/entities/EntittyCreate"
 import { EntityList } from "@/features/entities/EntityList"
-import { UserEdit } from "@/features/users/UserEdit"
 import { EntityEdit } from "@/features/entities/EntityEdit"
 import { SignupPage } from "@/features/auth/components/sign-up-page"
 import { UserListPage } from "@/features/users/components/user-list"
+import { UserCreatePage } from "@/features/users/components/user-create"
+import { UserEditPage } from "@/features/users/components/user-edit"
 
 export function Routes() {
   return (
@@ -30,10 +30,10 @@ export function Routes() {
                   <UserListPage />
                 </Route>
                 <Route path="/create">
-                  <UserCreate />
+                  <UserCreatePage />
                 </Route>
                 <Route path=":id">
-                  <UserEdit />
+                  <UserEditPage />
                 </Route>
               </Switch>
             </UserContainer>
