@@ -13,17 +13,19 @@ import { UserListPage } from "@/features/users/components/user-list"
 import { UserCreatePage } from "@/features/users/components/user-create"
 import { UserEditPage } from "@/features/users/components/user-edit"
 
+import { paths } from "@/config/paths"
+
 export function Routes() {
   return (
     <Switch>
-      <Route path="/login" component={LoginPage}></Route>
-      <Route path="/sign-up" component={SignupPage}></Route>
+      <Route path={paths.auth.login.path} component={LoginPage}></Route>
+      <Route path={paths.auth.signup.path} component={SignupPage}></Route>
       <AuthContainer>
         <BaseContainer>
           <Route path="/">
             <HomePage />
           </Route>
-          <Route path="/users" nest>
+          <Route path={paths.users.list.path} nest>
             <UserContainer>
               <Switch>
                 <Route path="/">

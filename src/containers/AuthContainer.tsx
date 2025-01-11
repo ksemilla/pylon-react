@@ -4,6 +4,7 @@ import { verifyToken } from "@/api/auth"
 import { useEffect } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { getUser } from "@/api/users"
+import { paths } from "@/config/paths"
 
 export function AuthContainer({ children }: { children: React.ReactNode }) {
   const [_, setLocation] = useLocation()
@@ -11,7 +12,7 @@ export function AuthContainer({ children }: { children: React.ReactNode }) {
   const token = localStorage.getItem("accessToken")
   useEffect(() => {
     if (!isLogged && !token) {
-      setLocation("/login")
+      setLocation(paths.auth.login.path)
     } else if (!isLogged && token) {
       verifyToken(token)
         .then((res) => {
@@ -20,7 +21,7 @@ export function AuthContainer({ children }: { children: React.ReactNode }) {
         .catch(() => {
           logout()
           localStorage.removeItem("accessToken")
-          setLocation("/login")
+          setLocation(paths.auth.login.path)
         })
     }
   }, [isLogged])
