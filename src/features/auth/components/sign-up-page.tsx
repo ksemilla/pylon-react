@@ -15,6 +15,7 @@ import { GoogleIcon } from "@/components/icons/GoogleIcon"
 import { formSchema, LoginForm } from "./login-form"
 import { z } from "zod"
 import axios from "axios"
+import { paths } from "@/config/paths"
 
 export function SignupPage() {
   const { toast } = useToast()
@@ -156,7 +157,7 @@ function SignupFooter() {
   return (
     <div className="text-center">
       <Link
-        href="/login"
+        href={paths.auth.login.getHref()}
         className="text-sm leading-7 [&:not(:first-child)]:mt-6 hover:text-blue-600"
       >
         Already a member? Login here.

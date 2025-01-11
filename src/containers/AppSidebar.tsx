@@ -26,6 +26,7 @@ import { Link } from "wouter"
 import { NavSecondary } from "./NavSecondary"
 import { NavUser } from "./NavUser"
 import { UserRole } from "@/types/users"
+import { paths } from "@/config/paths"
 
 const items = [
   {
@@ -106,7 +107,7 @@ const teams = [
 const adminItems = [
   {
     title: "Users",
-    url: "/users",
+    url: paths.users.list.getHref(),
     icon: Home,
   },
   {
