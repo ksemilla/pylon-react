@@ -31,6 +31,21 @@ export const paths = {
     },
   },
 
+  entities: {
+    list: {
+      path: "/entities",
+      getHref: () => "/entities",
+    },
+    single: {
+      path: "/entity/:id",
+      getHref: (id: string) => `/entity/${id}`,
+    },
+    create: {
+      path: "/entities/create",
+      getHref: () => "/entities/create",
+    },
+  },
+
   home: {
     path: "/",
     getHref: () => "/",

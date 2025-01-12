@@ -1,5 +1,6 @@
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
+import { paths } from "@/config/paths"
 import { cn } from "@/lib/utils"
 import { Link, useLocation } from "wouter"
 
@@ -17,7 +18,7 @@ export function EntityContainer({ children }: UserContainer) {
           <Separator orientation="vertical" className="mr-2 h-4" />
           <nav className="flex space-x-4 items-center">
             <Link
-              href="~/entities"
+              href={`~${paths.entities.list.getHref()}`}
               className={cn(
                 "transition-colors text-sm hover:text-slate-950 dark:hover:text-slate-50",
                 location === "/"
@@ -29,7 +30,7 @@ export function EntityContainer({ children }: UserContainer) {
             </Link>
             <Separator orientation="vertical" className="mr-2 h-4" />
             <Link
-              href="~/entities/create"
+              href={`~${paths.entities.create.getHref()}`}
               className={cn(
                 "transition-colors text-sm hover:text-slate-950 dark:hover:text-slate-50",
                 location === "/create"
