@@ -112,7 +112,7 @@ const adminItems = [
   },
   {
     title: "Entities",
-    url: "/entities",
+    url: paths.entities.list.getHref(),
     icon: Inbox,
   },
 ]
