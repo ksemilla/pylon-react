@@ -1,5 +1,5 @@
 import { Route, Switch } from "wouter"
-import { AuthContainer } from "@/containers/AuthContainer"
+import { AuthContainer } from "@/features/auth/components/auth-container"
 import { BaseContainer } from "@/containers/BaseContainer"
 import { HomePage } from "@/features/home/Home"
 import { LoginPage } from "@/features/auth/components/login-page"

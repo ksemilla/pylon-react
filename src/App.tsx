@@ -5,7 +5,7 @@ import { Routes } from "./routes"
 import { Toaster } from "./components/ui/toaster.tsx"
 import { useEffect } from "react"
 import { useAuthStore } from "./stores/auth.ts"
-import { verifyToken } from "./api/auth.ts"
+import { verifyToken } from "@/features/auth/api"
 
 const queryClient = new QueryClient()
 
