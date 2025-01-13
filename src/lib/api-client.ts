@@ -43,6 +43,7 @@ const api = {
   },
 
   post: <R>(url: string, data: any, config?: AxiosRequestConfig) => {
+    console.log("api-client", url, env.API_URL)
     return axiosInstance.post<R>(url, data, {
       ...config,
       headers: config?.headers ?? {

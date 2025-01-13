@@ -1,4 +1,3 @@
-import { googleLogin } from "@/api/auth"
 import { Button } from "@/components/ui/button"
 import { parseJwt } from "@/lib/utils"
 import { useAuthStore } from "@/stores/auth"
@@ -16,6 +15,7 @@ import { GoogleIcon } from "@/components/icons/GoogleIcon"
 import { formSchema, LoginForm } from "./login-form"
 import { z } from "zod"
 import axios from "axios"
+import { googleLogin } from "../api"
 
 export function LoginPage() {
   const { toast } = useToast()

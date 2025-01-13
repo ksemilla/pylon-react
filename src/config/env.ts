@@ -23,7 +23,6 @@ const createEnv = () => {
   }, {})
 
   const parsedEnv = EnvSchema.safeParse(envVars)
-  console.log("xx", parsedEnv)
   if (!parsedEnv.success) {
     throw new Error(
       `Invalid env provided.
@@ -33,6 +32,11 @@ const createEnv = () => {
           .join("\n")}
         `
     )
+  }
+
+  parsedEnv.data = {
+    ...parsedEnv.data,
+    API_URL: parsedEnv.data.API_URL + "/api",
   }
 
   return parsedEnv.data
