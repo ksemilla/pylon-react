@@ -3,7 +3,7 @@ import { useAuthStore } from "@/stores/auth"
 import { verifyToken } from "../api"
 import { useEffect } from "react"
 import { useQuery } from "@tanstack/react-query"
-import { getUser } from "@/api/users"
+import { getUser } from "@/features/users/api/get-user"
 import { paths } from "@/config/paths"
 
 export function AuthContainer({ children }: { children: React.ReactNode }) {

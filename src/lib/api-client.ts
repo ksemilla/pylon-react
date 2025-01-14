@@ -32,7 +32,7 @@ const axiosInstance = axios.create({
 
 const getAccessToken = () => localStorage.getItem("accessToken")
 
-const api = {
+export const api = {
   get: <R>(url: string, config?: AxiosRequestConfig) => {
     return axiosInstance.get<R>(url, {
       ...config,
@@ -43,7 +43,6 @@ const api = {
   },
 
   post: <R>(url: string, data: any, config?: AxiosRequestConfig) => {
-    console.log("api-client", url, env.API_URL)
     return axiosInstance.post<R>(url, data, {
       ...config,
       headers: config?.headers ?? {
@@ -62,4 +61,3 @@ const api = {
   },
 }
 
-export default api
