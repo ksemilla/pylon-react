@@ -1,20 +1,26 @@
-import { editUser, getUser } from "@/api/users"
+import { editUser } from "@/api/users"
 import { ErrorMessage } from "@/components/custom/error"
 import { Loader } from "@/components/custom/loader"
 import { UserForm } from "./user-form"
 import { User } from "@/types/users"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 import { useParams } from "wouter"
+import { getUserQueryOptions, useUser } from "../api/get-user"
 
 export function UserEditPage() {
   const { id = "0" } = useParams()
 
-  const { data, error } = useQuery({
-    queryKey: ["user", id],
-    queryFn: async () => {
-      return getUser(parseInt(id))
-    },
+  // const { data, error } = useQuery({
+  //   queryKey: ["user", id],
+  //   queryFn: async () => {
+  //     return getUser(parseInt(id))
+  //   },
+  // })
+
+  const { data, error } = useUser({
+    id: parseInt(id),
+    queryConfig: getUserQueryOptions(parseInt(id)),
   })
 
   const { mutate, isPending } = useMutation({
