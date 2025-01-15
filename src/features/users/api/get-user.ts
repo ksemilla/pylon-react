@@ -19,7 +19,7 @@ type UseUserOptions = {
   queryConfig?: QueryConfig<typeof getUserQueryOptions>
 }
 
-export const useDiscussion = ({ id, queryConfig }: UseUserOptions) => {
+export const useUser = ({ id, queryConfig }: UseUserOptions) => {
   return useQuery({
     ...getUserQueryOptions(id),
     ...queryConfig,
