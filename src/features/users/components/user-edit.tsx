@@ -11,13 +11,6 @@ import { getUserQueryOptions, useUser } from "../api/get-user"
 export function UserEditPage() {
   const { id = "0" } = useParams()
 
-  // const { data, error } = useQuery({
-  //   queryKey: ["user", id],
-  //   queryFn: async () => {
-  //     return getUser(parseInt(id))
-  //   },
-  // })
-
   const { data, error } = useUser({
     id: parseInt(id),
     queryConfig: getUserQueryOptions(parseInt(id)),

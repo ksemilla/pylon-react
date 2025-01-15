@@ -10,7 +10,7 @@ import { api } from "@/lib/api-client"
 import { User } from "@/types/users"
 import { getUsersQueryOptions } from "./get-users"
 import { AxiosResponse } from "axios"
-import { log } from "console"
+import { log } from "@/lib/utils"
 
 export const createUserInputSchema = z.object({
   title: z.string().min(1, "Required"),

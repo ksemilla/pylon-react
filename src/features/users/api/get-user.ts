@@ -3,15 +3,15 @@ import { QueryConfig } from "@/lib/react-query"
 import { User } from "@/types/users"
 import { queryOptions, useQuery } from "@tanstack/react-query"
 
-export const getUser = (id: number) => {
-  return api.get<User>(`users/${id}/`)
+export const getUser = ({ userId }: { userId: number }) => {
+  return api.get<User>(`users/${userId}/`)
 }
 
-export const getUserQueryOptions = (id: number) => {
+export const getUserQueryOptions = (userId: number) => {
   return queryOptions({
-    enabled: !!id,
-    queryKey: ["user", id],
-    queryFn: () => getUser(id),
+    enabled: !!userId,
+    queryKey: ["user", userId],
+    queryFn: () => getUser({ userId }),
   })
 }
 
