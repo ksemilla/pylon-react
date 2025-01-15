@@ -2,7 +2,7 @@ import { LoginPage } from "../login-page"
 import { act, fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth"
-import { googleLogin } from "@/api/auth"
+import { googleLogin } from "../../api"
 import { parseJwt } from "@/lib/utils"
 import * as AuthStore from "@/stores/auth"
 import * as Wouter from "wouter"
@@ -23,7 +23,7 @@ vi.mock("firebase/auth", () => ({
   GoogleAuthProvider: vi.fn(),
 }))
 
-vi.mock("@/api/auth", () => ({
+vi.mock("../../api", () => ({
   googleLogin: vi.fn().mockImplementationOnce(() => ({
     data: {
       token: "test-token",
@@ -78,13 +78,10 @@ describe("LoginPage", () => {
     authStoreSpy.mockReturnValue({
       setUserId,
     })
-
     const mockSetLocation = vi.fn()
     const useLocationSpy = vi.spyOn(Wouter, "useLocation")
     useLocationSpy.mockImplementation(() => ["login", mockSetLocation])
-
     render(<LoginPage />)
-
     const emailInput = screen.getByRole("textbox", { name: /email/i })
     const passwordInput = screen.getByLabelText(/Password/i)
     const form = screen.getByRole("form", { name: "form" })
@@ -97,7 +94,6 @@ describe("LoginPage", () => {
     await act(() => {
       fireEvent.submit(form)
     })
-
     expect(signInWithEmailAndPassword).toHaveBeenCalledOnce()
     expect(signInWithEmailAndPassword).toHaveBeenCalledWith(
       getAuth(),

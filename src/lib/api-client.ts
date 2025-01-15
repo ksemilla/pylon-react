@@ -2,7 +2,7 @@ import {
   camelToSnakeCase,
   camelToSnakeCaseFormData,
   snakeToCamelCase,
-} from "@/lib/utils"
+} from "./utils"
 import axios, {
   AxiosRequestConfig,
   AxiosRequestTransformer,
@@ -60,4 +60,3 @@ export const api = {
     })
   },
 }
-

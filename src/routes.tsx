@@ -3,7 +3,6 @@ import { AuthContainer } from "@/features/auth/components/auth-container"
 import { BaseContainer } from "@/containers/BaseContainer"
 import { HomePage } from "@/features/home/Home"
 import { LoginPage } from "@/features/auth/components/login-page"
-import { UserContainer } from "@/containers/UserContainer"
 import { EntityContainer } from "@/containers/EntityContainer"
 import { EntityCreate } from "@/features/entities/EntityCreate"
 import { EntityList } from "@/features/entities/EntityList"
@@ -14,6 +13,7 @@ import { UserCreatePage } from "@/features/users/components/user-create"
 import { UserEditPage } from "@/features/users/components/user-edit"
 
 import { paths } from "@/config/paths"
+import { UserLayout } from "./features/users/components/user-layout"
 
 export function Routes() {
   return (
@@ -26,7 +26,7 @@ export function Routes() {
             <HomePage />
           </Route>
           <Route path={paths.users.list.path} nest>
-            <UserContainer>
+            <UserLayout>
               <Switch>
                 <Route path="/">
                   <UserListPage />
@@ -38,7 +38,7 @@ export function Routes() {
                   <UserEditPage />
                 </Route>
               </Switch>
-            </UserContainer>
+            </UserLayout>
           </Route>
           <Route path="/entities" nest>
             <EntityContainer>
