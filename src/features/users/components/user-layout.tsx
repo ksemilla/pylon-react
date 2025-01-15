@@ -4,11 +4,11 @@ import { paths } from "@/config/paths"
 import { cn } from "@/lib/utils"
 import { Link, useLocation } from "wouter"
 
-interface UserContainer {
+interface UserLayout {
   children: React.ReactNode
 }
 
-export function UserContainer({ children }: UserContainer) {
+export function UserLayout({ children }: UserLayout) {
   const [location] = useLocation()
   return (
     <div>
