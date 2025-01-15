@@ -1,43 +1,56 @@
-// import { useMutation, useQueryClient } from "@tanstack/react-query"
-// import { z } from "zod"
+import {
+  useMutation,
+  UseMutationOptions,
+  useQueryClient,
+} from "@tanstack/react-query"
+import { z } from "zod"
 
-// import { api } from "@/lib/api-client"
-// import { MutationConfig } from "@/lib/react-query"
-// import { Discussion } from "@/types/api"
+import { api } from "@/lib/api-client"
 
-// import { getDiscussionsQueryOptions } from "./get-discussions"
-// import { User } from "@/types/users"
+import { User } from "@/types/users"
+import { getUsersQueryOptions } from "./get-users"
+import { AxiosResponse } from "axios"
+import { log } from "console"
 
-// export const createUserInputSchema = z.object({
-//   title: z.string().min(1, "Required"),
-//   body: z.string().min(1, "Required"),
-// })
+export const createUserInputSchema = z.object({
+  title: z.string().min(1, "Required"),
+  body: z.string().min(1, "Required"),
+})
 
-// export type CreateDiscussionInput = z.infer<typeof createUserInputSchema>
+export type CreateDiscussionInput = z.infer<typeof createUserInputSchema>
 
-// export const createUser = (data: User) => {
-//   return api.post<User>("users/", data)
-// }
+export const createUser = (data: User) => {
+  return api.post<User>("users/", data)
+}
 
-// type UseCreateUserOptions = {
-//   mutationConfig?: MutationConfig<typeof createDiscussion>
-// }
+type UseCreateUserOptions = {
+  mutationConfig?: UseMutationOptions<
+    AxiosResponse<User, any>,
+    Error,
+    User,
+    unknown
+  >
+}
 
-// export const useCreateUser = ({
-//   mutationConfig = {},
-// }: UseCreateUserOptions = {}) => {
-//   const queryClient = useQueryClient()
+export const useCreateUser = ({
+  mutationConfig = {},
+}: UseCreateUserOptions = {}) => {
+  const queryClient = useQueryClient()
 
-//   const { onSuccess, ...restConfig } = mutationConfig
+  const { onSuccess, onError, ...restConfig } = mutationConfig
 
-//   return useMutation({
-//     onSuccess: (...args) => {
-//       queryClient.invalidateQueries({
-//         queryKey: getDiscussionsQueryOptions().queryKey,
-//       })
-//       onSuccess?.(...args)
-//     },
-//     ...restConfig,
-//     mutationFn: createUser,
-//   })
-// }
+  return useMutation({
+    onSuccess: (...args) => {
+      queryClient.invalidateQueries({
+        queryKey: getUsersQueryOptions().queryKey,
+      })
+      onSuccess?.(...args)
+    },
+    onError: (err, variables, context) => {
+      log(err)
+      onError?.(err, variables, context)
+    },
+    ...restConfig,
+    mutationFn: createUser,
+  })
+}
