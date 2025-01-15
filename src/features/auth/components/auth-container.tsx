@@ -30,11 +30,12 @@ export function AuthContainer({ children }: { children: React.ReactNode }) {
     queryKey: ["user", userId],
     enabled: !!userId,
     queryFn: async () => {
-      return getUser(userId ?? 0).then((res) => {
+      return getUser({ userId: userId ?? 0 }).then((res) => {
         login(res.data)
         return res.data
       })
     },
   })
+
   return <>{children}</>
 }
