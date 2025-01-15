@@ -30,8 +30,6 @@ export function NavUser({ user }: { user: User | null }) {
   const authStore = useAuthStore()
   const { isMobile } = useSidebar()
 
-  console.log(user)
-
   if (!user) {
     return <div>Loading...</div>
   }

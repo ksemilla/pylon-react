@@ -9,6 +9,7 @@ export const getUser = (id: number) => {
 
 export const getUserQueryOptions = (id: number) => {
   return queryOptions({
+    enabled: !!id,
     queryKey: ["user", id],
     queryFn: () => getUser(id),
   })
