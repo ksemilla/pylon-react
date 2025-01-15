@@ -3,7 +3,6 @@ import {
   UseMutationOptions,
   useQueryClient,
 } from "@tanstack/react-query"
-import { z } from "zod"
 
 import { api } from "@/lib/api-client"
 
@@ -11,13 +10,6 @@ import { User } from "@/types/users"
 import { getUsersQueryOptions } from "./get-users"
 import { AxiosResponse } from "axios"
 import { log } from "@/lib/utils"
-
-export const createUserInputSchema = z.object({
-  title: z.string().min(1, "Required"),
-  body: z.string().min(1, "Required"),
-})
-
-export type CreateDiscussionInput = z.infer<typeof createUserInputSchema>
 
 export const createUser = (data: User) => {
   return api.post<User>("users/", data)
