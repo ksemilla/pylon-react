@@ -61,7 +61,7 @@ export function UserForm(props: UserForm) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form aria-label="user-form" onSubmit={form.handleSubmit(onSubmit)}>
         <fieldset disabled={props.disabled} className="gap-4 grid grid-cols-12">
           <FormField
             control={form.control}
