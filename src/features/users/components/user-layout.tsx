@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import { Link, useLocation } from "wouter"
 
 interface UserLayout {
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 export function UserLayout({ children }: UserLayout) {
@@ -18,7 +18,7 @@ export function UserLayout({ children }: UserLayout) {
           <Separator orientation="vertical" className="mr-2 h-4" />
           <nav className="flex space-x-4 items-center">
             <Link
-              href={`~${paths.users.list.getHref()}`}
+              href={paths.users.list.getHref()}
               className={cn(
                 "transition-colors text-sm hover:text-slate-950 dark:hover:text-slate-50",
                 location === "/"
@@ -30,7 +30,7 @@ export function UserLayout({ children }: UserLayout) {
             </Link>
             <Separator orientation="vertical" className="mr-2 h-4" />
             <Link
-              href={`~${paths.users.create.getHref()}`}
+              href={paths.users.create.path}
               className={cn(
                 "transition-colors text-sm hover:text-slate-950 dark:hover:text-slate-50",
                 location === "/create"

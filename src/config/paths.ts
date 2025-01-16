@@ -26,7 +26,7 @@ export const paths = {
       getHref: (id: string) => `/user/${id}`,
     },
     create: {
-      path: "/users/create",
+      path: "/create",
       getHref: () => "/users/create",
     },
   },
