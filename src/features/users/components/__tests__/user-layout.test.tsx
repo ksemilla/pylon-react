@@ -32,6 +32,7 @@ describe("UserLayout", () => {
     const newCreateLink = await screen.findByRole("link", {
       name: "Create New",
     })
+    console.log(window.location.pathname)
     expect(newCreateLink).toHaveClass("text-slate-950")
   })
 })

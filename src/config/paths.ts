@@ -19,7 +19,7 @@ export const paths = {
   users: {
     list: {
       path: "/users",
-      getHref: () => "/users",
+      getHref: () => "~/users",
     },
     single: {
       path: "/user/:id",
@@ -27,7 +27,7 @@ export const paths = {
     },
     create: {
       path: "/create",
-      getHref: () => "/users/create",
+      getHref: () => "~/users/create",
     },
   },
 
