@@ -18,7 +18,7 @@ export function UserSearch() {
 
   return (
     <div className="flex w-full max-w-sm items-center space-x-2 mb-1">
-      <Search className="opacity-50" />
+      <Search role="img" className="opacity-50" />
       <Input
         defaultValue={queryParam}
         onChange={(e) => {

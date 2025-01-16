@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react"
-import { describe, expect, it, vi } from "vitest"
+import { describe, expect, it } from "vitest"
 import { UserLayout } from "../user-layout"
 import { SidebarProvider } from "@/components/ui/sidebar"
 
