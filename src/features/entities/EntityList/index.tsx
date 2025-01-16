@@ -27,7 +27,7 @@ export function EntityList() {
   const onRowClick = (entity: Entity) => {
     setLocation(`/${entity.id}`)
   }
-  console.log(data)
+
   if (axios.isAxiosError(error)) {
     return (
       <ErrorMessage title="Error" messages={[error.response?.data.detail]} />

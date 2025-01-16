@@ -22,16 +22,17 @@ describe("UserLayout", () => {
     expect(createLink).toBeInTheDocument()
     expect(createLink).toHaveClass("text-slate-500")
 
-    await act(() => {
+    act(() => {
       fireEvent.click(createLink)
     })
-    console.log(1, window.location.pathname)
+
     const newUsersLink = screen.getByRole("link", { name: "Users" })
     expect(newUsersLink).toHaveClass("text-slate-500")
 
     const newCreateLink = await screen.findByRole("link", {
       name: "Create New",
     })
+    console.log(window.location.pathname)
     expect(newCreateLink).toHaveClass("text-slate-950")
   })
 })
