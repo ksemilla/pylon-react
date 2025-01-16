@@ -29,8 +29,10 @@ describe("UserSearch", async () => {
     fireEvent.change(input, {
       target: { value: "test" },
     })
+
     expect(input.value).toBe("test")
-    console.log(1, window.location.search)
-    // expect(window.location.pathname).toBe("/?q=test")
+
+    // NOTE: TODO add test to check query params
+    // MIGHT BE BECAUSE THE INPUT IS UNCONTROLLED
   })
 })
