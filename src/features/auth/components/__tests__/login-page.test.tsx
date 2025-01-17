@@ -1,5 +1,5 @@
 import { LoginPage } from "../login-page"
-import { act, fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth"
 import { googleLogin } from "../../api"
@@ -91,7 +91,7 @@ describe("LoginPage", () => {
     fireEvent.change(passwordInput, {
       target: { value: "testtest" },
     })
-    await act(() => {
+    await waitFor(() => {
       fireEvent.submit(form)
     })
     expect(signInWithEmailAndPassword).toHaveBeenCalledOnce()
@@ -134,7 +134,7 @@ describe("LoginPage", () => {
     fireEvent.change(passwordInput, {
       target: { value: "testtest" },
     })
-    await act(() => {
+    await waitFor(() => {
       fireEvent.submit(form)
     })
 
@@ -162,7 +162,7 @@ describe("LoginPage", () => {
     fireEvent.change(passwordInput, {
       target: { value: "testtest" },
     })
-    await act(() => {
+    await waitFor(() => {
       fireEvent.submit(form)
     })
 
@@ -176,7 +176,7 @@ describe("LoginPage", () => {
 
     const link = screen.getByText("No account yet? Create here.")
     expect(link).toBeInTheDocument()
-    await act(() => {
+    await waitFor(() => {
       fireEvent.click(link)
     })
 

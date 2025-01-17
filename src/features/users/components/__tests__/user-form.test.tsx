@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 import { UserForm } from "../user-form"
 import { UserRole } from "@/types/users"
@@ -74,6 +74,7 @@ describe("UserForm", () => {
 
     fireEvent.change(roleInput, { target: { value: UserRole.ADMIN } })
     expect(roleInput).toHaveValue(UserRole.ADMIN)
+    // NOTE TODO: CHECK THAT THE DEFAULT VALUE OF ROLE IS USER
   })
 
   it("changes is active field", async () => {
@@ -83,5 +84,20 @@ describe("UserForm", () => {
     expect(isActiveInput).toBeChecked()
     fireEvent.click(isActiveInput)
     expect(isActiveInput).not.toBeChecked()
+  })
+
+  it("success submits", async () => {
+    const onSubmitSpy = vi.fn()
+    render(<UserForm onSubmit={onSubmitSpy} />)
+
+    const form = screen.getByRole("form")
+    const emailInput = screen.getByRole("textbox", { name: "Email" })
+
+    fireEvent.change(emailInput, { target: { value: "test@test.com" } })
+    await waitFor(() => {
+      fireEvent.submit(form)
+    })
+
+    expect(onSubmitSpy).toHaveBeenCalledOnce()
   })
 })
