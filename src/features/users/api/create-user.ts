@@ -13,6 +13,7 @@ import { log } from "@/lib/utils"
 import { useToast } from "@/hooks/use-toast"
 
 export const createUser = (data: User) => {
+  console.log("what now lol noob")
   return api.post<User>("users/", data)
 }
 
@@ -34,12 +35,14 @@ export const useCreateUser = ({
 
   return useMutation({
     onSuccess: (...args) => {
+      console.log("success")
       queryClient.invalidateQueries({
         queryKey: getUsersQueryOptions().queryKey,
       })
       onSuccess?.(...args)
     },
     onError: (err, variables, context) => {
+      console.log("ano na")
       log(err)
       onError?.(err, variables, context)
       if (axios.isAxiosError(err)) {
@@ -51,6 +54,9 @@ export const useCreateUser = ({
       }
     },
     ...restConfig,
-    mutationFn: createUser,
+    mutationFn: (d) => {
+      console.log("woohoo")
+      return createUser(d)
+    },
   })
 }
