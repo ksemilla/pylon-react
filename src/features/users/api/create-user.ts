@@ -13,7 +13,6 @@ import { log } from "@/lib/utils"
 import { useToast } from "@/hooks/use-toast"
 
 export const createUser = (data: User) => {
-  console.log("what now lol noob")
   return api.post<User>("users/", data)
 }
 
@@ -42,21 +41,15 @@ export const useCreateUser = ({
       onSuccess?.(...args)
     },
     onError: (err, variables, context) => {
-      console.log("ano na")
       log(err)
       onError?.(err, variables, context)
-      if (axios.isAxiosError(err)) {
-        toast({
-          title: "Error creating user",
-          description: err.response?.data.detail,
-          variant: "destructive",
-        })
-      }
+      toast({
+        title: "Error creating user",
+        description: axios.isAxiosError(err) ? err.response?.data.detail : "",
+        variant: "destructive",
+      })
     },
     ...restConfig,
-    mutationFn: (d) => {
-      console.log("woohoo")
-      return createUser(d)
-    },
+    mutationFn: createUser,
   })
 }
