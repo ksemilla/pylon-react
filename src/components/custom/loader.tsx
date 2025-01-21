@@ -1,5 +1,5 @@
 import { LoaderCircle } from "lucide-react"
 
 export function Loader() {
-  return <LoaderCircle className="animate-spin" />
+  return <LoaderCircle role="img" className="animate-spin" />
 }

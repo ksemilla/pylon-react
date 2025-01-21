@@ -100,4 +100,33 @@ describe("UserForm", () => {
 
     expect(onSubmitSpy).toHaveBeenCalledOnce()
   })
+
+  it("fills form with default values", async () => {
+    render(
+      <UserForm
+        onSubmit={() => {}}
+        defaultValues={{
+          email: "test@test.com",
+          role: UserRole.ADMIN,
+          isActive: false,
+        }}
+      />
+    )
+
+    const form = screen.getByRole("form")
+    const emailInput = screen.getByRole("textbox", { name: "Email" })
+    const roleInput = screen.getByRole("combobox", { name: "Role" })
+    const defaultRole = screen.getByText((content, element) => {
+      return (
+        element?.tagName === "SPAN" && content === UserRole.ADMIN.toUpperCase()
+      )
+    })
+    const isActiveInput = screen.getByRole("switch", { name: "Is Active?" })
+
+    expect(form).toBeInTheDocument()
+    expect(emailInput).toHaveValue("test@test.com")
+    expect(defaultRole).toBeInTheDocument()
+    expect(roleInput).toHaveTextContent(UserRole.ADMIN.toUpperCase())
+    expect(isActiveInput).toHaveAttribute("data-state", "unchecked")
+  })
 })

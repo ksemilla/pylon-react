@@ -7,9 +7,10 @@ import {
 import { api } from "@/lib/api-client"
 
 import { User } from "@/types/users"
-import { AxiosResponse } from "axios"
+import axios, { AxiosResponse } from "axios"
 import { log } from "@/lib/utils"
 import { getUserQueryOptions } from "./get-user"
+import { useToast } from "@/hooks/use-toast"
 
 export const editUser = ({
   userId,
@@ -36,7 +37,7 @@ export const useEditUser = ({
   mutationConfig = {},
 }: UseEditUserOptions) => {
   const queryClient = useQueryClient()
-
+  const { toast } = useToast()
   const { onSuccess, onError, ...restConfig } = mutationConfig
 
   return useMutation({
@@ -49,6 +50,11 @@ export const useEditUser = ({
     onError: (err, variables, context) => {
       log(err)
       onError?.(err, variables, context)
+      toast({
+        title: "Error updating user",
+        description: axios.isAxiosError(err) ? err.response?.data.detail : "",
+        variant: "destructive",
+      })
     },
     ...restConfig,
     mutationFn: (data: User) => editUser({ userId, data }),
