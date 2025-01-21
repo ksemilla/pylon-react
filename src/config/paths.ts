@@ -46,7 +46,7 @@ export const paths = {
     },
     single: {
       path: "/:id",
-      getHref: (id: string) => `~/entity/${id}`,
+      getHref: (id: string) => `~/entities/${id}`,
     },
     create: {
       path: "/create",
