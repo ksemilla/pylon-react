@@ -3,8 +3,6 @@ import { AuthContainer } from "@/features/auth/components/auth-container"
 import { BaseContainer } from "@/containers/BaseContainer"
 import { HomePage } from "@/features/home/Home"
 import { LoginPage } from "@/features/auth/components/login-page"
-import { EntityCreate } from "@/features/entities/EntityCreate"
-import { EntityEdit } from "@/features/entities/EntityEdit"
 import { SignupPage } from "@/features/auth/components/sign-up-page"
 import { UserListPage } from "@/features/users/components/user-list"
 import { UserCreatePage } from "@/features/users/components/user-create"
@@ -14,6 +12,8 @@ import { paths } from "@/config/paths"
 import { UserLayout } from "./features/users/components/user-layout"
 import { EntityListPage } from "./features/entities/components/entity-list"
 import { EntityLayout } from "./features/entities/components/entity-layout"
+import { EntityCreatePage } from "./features/entities/components/entity-create"
+import { EntityEditPage } from "./features/entities/components/entity-edit"
 
 export function Routes() {
   return (
@@ -47,10 +47,10 @@ export function Routes() {
                   <EntityListPage />
                 </Route>
                 <Route path={paths.entities.create.path}>
-                  <EntityCreate />
+                  <EntityCreatePage />
                 </Route>
                 <Route path={paths.entities.single.path}>
-                  <EntityEdit />
+                  <EntityEditPage />
                 </Route>
               </Switch>
             </EntityLayout>
