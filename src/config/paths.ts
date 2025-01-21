@@ -3,26 +3,30 @@ export const paths = {
     login: {
       path: "/login",
       getHref: (redirectTo?: string) =>
-        `/login${
+        `~/login${
           redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""
         }`,
     },
     signup: {
       path: "/sign-up",
       getHref: (redirectTo?: string) =>
-        `/sign-up${
+        `~/sign-up${
           redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""
         }`,
     },
   },
 
   users: {
-    list: {
+    base: {
       path: "/users",
+      getHref: () => "/users",
+    },
+    list: {
+      path: "/",
       getHref: () => "~/users",
     },
     single: {
-      path: "/user/:id",
+      path: "/:id",
       getHref: (id: string) => `/user/${id}`,
     },
     create: {
@@ -32,17 +36,21 @@ export const paths = {
   },
 
   entities: {
-    list: {
+    base: {
       path: "/entities",
       getHref: () => "/entities",
     },
+    list: {
+      path: "/",
+      getHref: () => "~/entities",
+    },
     single: {
-      path: "/entity/:id",
-      getHref: (id: string) => `/entity/${id}`,
+      path: "/:id",
+      getHref: (id: string) => `~/entity/${id}`,
     },
     create: {
-      path: "/entities/create",
-      getHref: () => "/entities/create",
+      path: "/create",
+      getHref: () => "~/entities/create",
     },
   },
 

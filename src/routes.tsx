@@ -3,9 +3,7 @@ import { AuthContainer } from "@/features/auth/components/auth-container"
 import { BaseContainer } from "@/containers/BaseContainer"
 import { HomePage } from "@/features/home/Home"
 import { LoginPage } from "@/features/auth/components/login-page"
-import { EntityContainer } from "@/containers/EntityContainer"
 import { EntityCreate } from "@/features/entities/EntityCreate"
-import { EntityList } from "@/features/entities/EntityList"
 import { EntityEdit } from "@/features/entities/EntityEdit"
 import { SignupPage } from "@/features/auth/components/sign-up-page"
 import { UserListPage } from "@/features/users/components/user-list"
@@ -14,6 +12,8 @@ import { UserEditPage } from "@/features/users/components/user-edit"
 
 import { paths } from "@/config/paths"
 import { UserLayout } from "./features/users/components/user-layout"
+import { EntityListPage } from "./features/entities/components/entity-list"
+import { EntityLayout } from "./features/entities/components/entity-layout"
 
 export function Routes() {
   return (
@@ -22,38 +22,38 @@ export function Routes() {
       <Route path={paths.auth.signup.path} component={SignupPage}></Route>
       <AuthContainer>
         <BaseContainer>
-          <Route path="/">
+          <Route path={paths.home.path}>
             <HomePage />
           </Route>
-          <Route path={paths.users.list.path} nest>
+          <Route path={paths.users.base.path} nest>
             <UserLayout>
               <Switch>
-                <Route path="/">
+                <Route path={paths.users.list.path}>
                   <UserListPage />
                 </Route>
-                <Route path="/create">
+                <Route path={paths.users.create.path}>
                   <UserCreatePage />
                 </Route>
-                <Route path=":id">
+                <Route path={paths.users.single.path}>
                   <UserEditPage />
                 </Route>
               </Switch>
             </UserLayout>
           </Route>
-          <Route path="/entities" nest>
-            <EntityContainer>
+          <Route path={paths.entities.base.path} nest>
+            <EntityLayout>
               <Switch>
-                <Route path="/">
-                  <EntityList />
+                <Route path={paths.entities.list.path}>
+                  <EntityListPage />
                 </Route>
-                <Route path="/create">
+                <Route path={paths.entities.create.path}>
                   <EntityCreate />
                 </Route>
-                <Route path=":id">
+                <Route path={paths.entities.single.path}>
                   <EntityEdit />
                 </Route>
               </Switch>
-            </EntityContainer>
+            </EntityLayout>
           </Route>
         </BaseContainer>
       </AuthContainer>
