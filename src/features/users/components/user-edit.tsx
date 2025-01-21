@@ -1,7 +1,6 @@
 import { ErrorMessage } from "@/components/custom/error"
 import { Loader } from "@/components/custom/loader"
 import { UserForm } from "./user-form"
-import { User } from "@/types/users"
 import axios from "axios"
 import { useParams } from "wouter"
 import { getUserQueryOptions, useUser } from "../api/get-user"
@@ -19,10 +18,6 @@ export function UserEditPage() {
     userId: parseInt(id),
   })
 
-  const onSubmit = (user: User) => {
-    mutate(user)
-  }
-
   if (axios.isAxiosError(error)) {
     return (
       <ErrorMessage title="Error" messages={[error.response?.data.detail]} />
@@ -36,7 +31,7 @@ export function UserEditPage() {
   return (
     <div className="max-w-xl">
       <UserForm
-        onSubmit={onSubmit}
+        onSubmit={mutate}
         defaultValues={data.data}
         disabled={isPending}
       />
