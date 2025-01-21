@@ -1,79 +1,78 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
-import { afterEach, describe, expect, it, vi } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import { UserEditPage } from "../user-edit"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { useUser } from "../../api/get-user"
+import * as GetUserApi from "../../api/get-user"
 import { UserRole } from "@/types/users"
-import { useEditUser } from "../../api/edit-user"
 import axios from "axios"
+import { useToast } from "@/hooks/use-toast"
+import { api } from "@/lib/api-client"
 
-const queryClient = new QueryClient()
-
-vi.mock("../../api/get-user", () => ({
-  useUser: vi.fn(),
-  getUserQueryOptions: vi.fn(),
+vi.mock("@/lib/utils", () => ({
+  log: vi.fn(),
+  cn: vi.fn(),
 }))
 
-vi.mock("../../api/edit-user", () => ({
-  useEditUser: vi.fn(),
+vi.mock("@/hooks/use-toast", () => ({
+  useToast: vi.fn().mockReturnValue({
+    toast: vi.fn(),
+  }),
+}))
+
+vi.mock("@/lib/api-client", () => ({
+  api: {
+    get: vi.fn(),
+    post: vi.fn(),
+    put: vi.fn(),
+  },
+}))
+
+vi.mock("wouter", () => ({
+  useParams: vi.fn().mockReturnValue({
+    id: "1",
+  }),
 }))
 
 describe("UserEdit", () => {
-  afterEach(() => {
-    vi.restoreAllMocks()
-  })
-
   it("renders edit user page", async () => {
-    vi.mocked(useUser).mockReturnValueOnce({
+    vi.mocked(api.get).mockReturnValue({
       data: {
-        data: {
-          email: "test@test.com",
-          role: UserRole.ADMIN,
-          isActive: false,
-        },
+        email: "test@test.com",
+        role: UserRole.ADMIN,
+        isActive: false,
       },
     } as any)
 
-    vi.mocked(useEditUser).mockReturnValueOnce({
-      mutate: vi.fn(),
-    } as any)
-
     render(
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={new QueryClient()}>
         <UserEditPage />
       </QueryClientProvider>
     )
 
     const form = await screen.findByRole("form")
     expect(form).toBeInTheDocument()
-    const emailInput = screen.getByRole("textbox", { name: "Email" })
-    const roleInput = screen.getByRole("combobox", { name: "Role" })
-    const isActiveInput = screen.getByRole("switch", { name: "Is Active?" })
+    const emailInput = await screen.findByRole("textbox", { name: "Email" })
+    const roleInput = await screen.findByRole("combobox", { name: "Role" })
+    const isActiveInput = await screen.findByRole("switch", {
+      name: "Is Active?",
+    })
 
-    expect(useUser).toHaveBeenCalledOnce()
     expect(emailInput).toHaveValue("test@test.com")
     expect(roleInput).toHaveTextContent(UserRole.ADMIN.toUpperCase())
     expect(isActiveInput).toHaveAttribute("data-state", "unchecked")
   })
 
   it("success - update user", async () => {
-    vi.mocked(useUser).mockReturnValueOnce({
+    vi.mocked(api.get).mockReturnValue({
       data: {
-        data: {
-          email: "test@test.com",
-          role: UserRole.ADMIN,
-          isActive: false,
-        },
+        email: "test12@test.com",
+        role: UserRole.ADMIN,
+        isActive: false,
       },
     } as any)
 
-    const mutateSpy = vi.fn()
-    vi.mocked(useEditUser).mockReturnValueOnce({
-      mutate: mutateSpy,
-    } as any)
-
     render(
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={new QueryClient()}>
         <UserEditPage />
       </QueryClientProvider>
     )
@@ -84,37 +83,21 @@ describe("UserEdit", () => {
       fireEvent.submit(form)
     })
 
-    expect(mutateSpy).toHaveBeenCalledOnce()
+    expect(api.get).toHaveBeenCalled()
+    expect(api.put).toHaveBeenCalledOnce()
   })
 
   it("fails to fetch user", async () => {
-    vi.mocked(useUser).mockReturnValueOnce({
-      data: {
-        data: {
-          email: "test@test.com",
-          role: UserRole.ADMIN,
-          isActive: false,
-        },
-      },
-      error: {
-        response: {
-          data: {
-            detail: "User not found",
-          },
-        },
-      },
-    } as any)
-
-    vi.mocked(useEditUser).mockReturnValueOnce({
-      mutate: vi.fn(),
-      isPending: false,
+    const useUserSpy = vi.spyOn(GetUserApi, "useUser")
+    useUserSpy.mockReturnValueOnce({
+      error: { response: { data: { detail: "User not found" } } },
     } as any)
 
     const isAxiosErrorSpy = vi.spyOn(axios, "isAxiosError")
     isAxiosErrorSpy.mockImplementationOnce(() => true)
 
     render(
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={new QueryClient()}>
         <UserEditPage />
       </QueryClientProvider>
     )
@@ -124,29 +107,54 @@ describe("UserEdit", () => {
   })
 
   it("renders loader", async () => {
-    vi.mocked(useUser).mockReturnValueOnce({
-      data: false,
-      error: {
-        response: {
-          data: {
-            detail: "User not found",
-          },
-        },
-      },
-    } as any)
-
-    vi.mocked(useEditUser).mockReturnValueOnce({
-      mutate: vi.fn(),
-      isPending: false,
+    const useUserSpy = vi.spyOn(GetUserApi, "useUser")
+    useUserSpy.mockReturnValueOnce({
+      error: { response: { data: { detail: "User not found" } } },
     } as any)
 
     render(
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={new QueryClient()}>
+        <UserEditPage />
+      </QueryClientProvider>
+    )
+    const svgElement = await screen.findByRole("img")
+    expect(svgElement).toBeInTheDocument()
+  })
+
+  it("fails to update user", async () => {
+    const toastSpy = vi.fn()
+    vi.mocked(useToast).mockReturnValue({
+      toast: toastSpy,
+    } as any)
+
+    vi.mocked(api.get).mockReturnValue({
+      data: {
+        email: "updateme@test.com",
+        role: UserRole.ADMIN,
+        isActive: false,
+      },
+    } as any)
+
+    vi.mocked(api.put).mockRejectedValue({
+      data: {
+        email: "updateme@test.com",
+        role: UserRole.ADMIN,
+        isActive: false,
+      },
+    } as any)
+
+    render(
+      <QueryClientProvider client={new QueryClient()}>
         <UserEditPage />
       </QueryClientProvider>
     )
 
-    const svgElement = await screen.findByRole("img")
-    expect(svgElement).toBeInTheDocument()
+    const form = await screen.findByRole("form")
+
+    await waitFor(() => {
+      fireEvent.submit(form)
+    })
+
+    expect(toastSpy).toHaveBeenCalledOnce()
   })
 })
