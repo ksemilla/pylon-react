@@ -16,7 +16,7 @@ export const createUser = (data: User) => {
   return api.post<User>("users/", data)
 }
 
-type UseCreateUserOptions = {
+export type UseCreateUserOptions = {
   mutationConfig?: UseMutationOptions<
     AxiosResponse<User, any>,
     Error,
@@ -34,7 +34,6 @@ export const useCreateUser = ({
 
   return useMutation({
     onSuccess: (...args) => {
-      console.log("success")
       queryClient.invalidateQueries({
         queryKey: getUsersQueryOptions().queryKey,
       })
