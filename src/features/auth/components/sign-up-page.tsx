@@ -160,10 +160,12 @@ function GoogleSignup() {
 }
 
 function SignupFooter() {
+  const { getQueryParam } = useQueryParams()
+  const redirectTo = getQueryParam("redirectTo") ?? paths.home.getHref()
   return (
     <div className="text-center">
       <Link
-        href={paths.auth.login.getHref()}
+        href={paths.auth.login.getHref(redirectTo)}
         className="text-sm leading-7 [&:not(:first-child)]:mt-6 hover:text-blue-600"
       >
         Already a member? Login here.

@@ -4,7 +4,10 @@ export const paths = {
       path: "/login",
       getHref: (redirectTo?: string) =>
         `~/login${
-          redirectTo && redirectTo !== "/"
+          redirectTo &&
+          redirectTo !== "/" &&
+          redirectTo !== "/login" &&
+          redirectTo !== "/sign-up"
             ? `?redirectTo=${encodeURIComponent(redirectTo)}`
             : ""
         }`,
@@ -13,7 +16,12 @@ export const paths = {
       path: "/sign-up",
       getHref: (redirectTo?: string) =>
         `~/sign-up${
-          redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""
+          redirectTo &&
+          redirectTo !== "/" &&
+          redirectTo !== "/login" &&
+          redirectTo !== "/sign-up"
+            ? `?redirectTo=${encodeURIComponent(redirectTo)}`
+            : ""
         }`,
     },
   },

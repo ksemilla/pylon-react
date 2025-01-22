@@ -168,10 +168,13 @@ function GoogleLogin() {
 }
 
 function LoginFooter() {
+  const { getQueryParam } = useQueryParams()
+  const redirectTo = getQueryParam("redirectTo") ?? paths.home.getHref()
+
   return (
     <div className="text-center">
       <Link
-        href="/sign-up"
+        href={paths.auth.signup.getHref(redirectTo)}
         className="text-sm leading-7 [&:not(:first-child)]:mt-6 hover:text-blue-600"
       >
         No account yet? Create here.
