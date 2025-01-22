@@ -16,12 +16,17 @@ import { formSchema, LoginForm } from "./login-form"
 import { z } from "zod"
 import axios from "axios"
 import { googleLogin } from "../api"
+import { useQueryParams } from "@/hooks/use-queryparams"
+import { paths } from "@/config/paths"
 
 export function LoginPage() {
   const { toast } = useToast()
   const authStore = useAuthStore()
   const auth = getAuth()
   const [_, setLocation] = useLocation()
+  const { getQueryParam } = useQueryParams()
+  const redirectTo = getQueryParam("redirectTo") ?? paths.home.getHref()
+
   const onSubmit = async (v: z.infer<typeof formSchema>) => {
     try {
       const firebaseRes = await signInWithEmailAndPassword(
@@ -34,7 +39,7 @@ export function LoginPage() {
       localStorage.setItem("accessToken", apiRes.data.token)
       const decoded = parseJwt(apiRes.data.token)
       authStore.setUserId((decoded?.payload as { userId: number }).userId)
-      setLocation("/")
+      setLocation(redirectTo)
     } catch (err) {
       if (axios.isAxiosError(err)) {
         toast({
@@ -119,6 +124,8 @@ function GoogleLogin() {
   const auth = getAuth()
   const provider = new GoogleAuthProvider()
   const [_, setLocation] = useLocation()
+  const { getQueryParam } = useQueryParams()
+  const redirectTo = getQueryParam("redirectTo") ?? paths.home.getHref()
 
   const onGoogleSubmit = () => {
     signInWithPopup(auth, provider)
@@ -129,7 +136,7 @@ function GoogleLogin() {
             localStorage.setItem("accessToken", res.data.token)
             const decoded = parseJwt(res.data.token)
             authStore.setUserId((decoded?.payload as { userId: number }).userId)
-            setLocation("/")
+            setLocation(redirectTo)
           })
           .catch((err) =>
             toast({
