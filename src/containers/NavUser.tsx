@@ -25,10 +25,13 @@ import {
 } from "@/components/ui/sidebar"
 import { useAuthStore } from "@/stores/auth"
 import { User } from "@/types/users"
+import { useLocation } from "wouter"
+import { paths } from "@/config/paths"
 
 export function NavUser({ user }: { user: User | null }) {
   const authStore = useAuthStore()
   const { isMobile } = useSidebar()
+  const [_, setLocation] = useLocation()
 
   if (!user) {
     return <div>Loading...</div>
@@ -103,6 +106,7 @@ export function NavUser({ user }: { user: User | null }) {
               onClick={() => {
                 authStore.logout()
                 localStorage.removeItem("accessToken")
+                setLocation(paths.auth.login.path)
               }}
             >
               <LogOut />
