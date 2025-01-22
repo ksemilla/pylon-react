@@ -16,18 +16,22 @@ import { formSchema, LoginForm } from "./login-form"
 import { z } from "zod"
 import axios from "axios"
 import { paths } from "@/config/paths"
+import { useQueryParams } from "@/hooks/use-queryparams"
 
 export function SignupPage() {
   const { toast } = useToast()
   const authStore = useAuthStore()
   const [_, setLocation] = useLocation()
+  const { getQueryParam } = useQueryParams()
+  const redirectTo = getQueryParam("redirectTo") ?? paths.home.getHref()
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const res = await signUp(values)
       localStorage.setItem("accessToken", res.data.token)
       const decoded = parseJwt(res.data.token)
       authStore.setUserId((decoded?.payload as { userId: number }).userId)
-      setLocation("/")
+      setLocation(redirectTo)
     } catch (err) {
       if (axios.isAxiosError(err)) {
         toast({
@@ -112,6 +116,8 @@ function GoogleSignup() {
   const auth = getAuth()
   const provider = new GoogleAuthProvider()
   const [_, setLocation] = useLocation()
+  const { getQueryParam } = useQueryParams()
+  const redirectTo = getQueryParam("redirectTo") ?? paths.home.getHref()
 
   const onGoogleSubmit = () => {
     signInWithPopup(auth, provider)
@@ -122,7 +128,7 @@ function GoogleSignup() {
             localStorage.setItem("accessToken", res.data.token)
             const decoded = parseJwt(res.data.token)
             authStore.setUserId((decoded?.payload as { userId: number }).userId)
-            setLocation("/")
+            setLocation(redirectTo)
           })
           .catch((err) =>
             toast({

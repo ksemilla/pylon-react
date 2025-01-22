@@ -4,7 +4,9 @@ export const paths = {
       path: "/login",
       getHref: (redirectTo?: string) =>
         `~/login${
-          redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""
+          redirectTo && redirectTo !== "/"
+            ? `?redirectTo=${encodeURIComponent(redirectTo)}`
+            : ""
         }`,
     },
     signup: {

@@ -1,41 +1,50 @@
-import { useLocation } from "wouter"
+import { Redirect, useLocation } from "wouter"
 import { useAuthStore } from "@/stores/auth"
 import { verifyToken } from "../api"
-import { useEffect } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { getUser } from "@/features/users/api/get-user"
 import { paths } from "@/config/paths"
+import { Loader } from "@/components/custom/loader"
 
 export function AuthContainer({ children }: { children: React.ReactNode }) {
-  const [_, setLocation] = useLocation()
-  const { isLogged, login, logout, userId, setUserId } = useAuthStore()
+  const [location, setLocation] = useLocation()
+  const authStore = useAuthStore()
   const token = localStorage.getItem("accessToken")
-  useEffect(() => {
-    if (!isLogged && !token) {
-      setLocation(paths.auth.login.path)
-    } else if (!isLogged && token) {
-      verifyToken(token)
-        .then((res) => {
-          setUserId(res.data.userId)
-        })
-        .catch(() => {
-          logout()
-          localStorage.removeItem("accessToken")
-          setLocation(paths.auth.login.path)
-        })
-    }
-  }, [isLogged])
+
+  const { isFetching } = useQuery({
+    queryKey: ["auth"],
+    enabled: !!token,
+    queryFn: async () => {
+      try {
+        const verifyRes = await verifyToken(token ?? "")
+        authStore.setUserId(verifyRes.data.userId)
+      } catch (err) {
+        authStore.logout()
+        localStorage.removeItem("accessToken")
+        setLocation(paths.auth.login.getHref(location))
+      }
+      return ""
+    },
+  })
 
   useQuery({
-    queryKey: ["user", userId],
-    enabled: !!userId,
+    queryKey: ["user", authStore.userId],
+    enabled: !!authStore.userId,
     queryFn: async () => {
-      return getUser({ userId: userId ?? 0 }).then((res) => {
-        login(res.data)
+      return getUser({ userId: authStore.userId ?? 0 }).then((res) => {
+        authStore.login(res.data)
         return res.data
       })
     },
   })
+
+  if (!token) {
+    return <Redirect to={paths.auth.login.getHref(location)} />
+  }
+
+  if (isFetching) {
+    return <Loader />
+  }
 
   return <>{children}</>
 }
