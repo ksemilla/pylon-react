@@ -109,6 +109,7 @@ describe("UserForm", () => {
           email: "test@test.com",
           role: UserRole.ADMIN,
           isActive: false,
+          members: [],
         }}
       />
     )
