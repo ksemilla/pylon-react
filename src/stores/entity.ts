@@ -6,6 +6,7 @@ interface EntityState {
   entity: Entity | null
 
   setEntityId: (entityId: number) => void
+  setEntity: (entity: Entity) => void
 }
 
 export const useEntityStore = create<EntityState>()((set) => ({
@@ -13,4 +14,5 @@ export const useEntityStore = create<EntityState>()((set) => ({
   entity: null,
 
   setEntityId: (entityId) => set((state) => ({ ...state, entityId })),
+  setEntity: (entity) => set((state) => ({ ...state, entity })),
 }))

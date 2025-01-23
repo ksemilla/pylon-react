@@ -86,7 +86,7 @@ export function parseJwt(token: string): JwtDecoded | null {
 
   // If the token doesn't have exactly 3 parts, it's invalid
   if (parts.length !== 3) {
-    console.error("Invalid JWT token")
+    log("Invalid JWT token")
     return null
   }
 
@@ -106,7 +106,7 @@ export function parseJwt(token: string): JwtDecoded | null {
 
     return { header, payload }
   } catch (e) {
-    console.error("Error parsing JWT:", e)
+    log("Error parsing JWT:")
     return null
   }
 }

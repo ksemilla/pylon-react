@@ -11,16 +11,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { useAuthStore } from "@/stores/auth"
-import {
-  AudioWaveform,
-  Calendar,
-  Command,
-  GalleryVerticalEnd,
-  Home,
-  Inbox,
-  Search,
-  Settings,
-} from "lucide-react"
+import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
 import { TeamSwitcher } from "./TeamSwitcher"
 import { Link } from "wouter"
 import { NavSecondary } from "./NavSecondary"
@@ -86,24 +77,6 @@ const items = [
   },
 ]
 
-const teams = [
-  {
-    name: "Acme Inc",
-    logo: GalleryVerticalEnd,
-    plan: "Enterprise",
-  },
-  {
-    name: "Acme Corp.",
-    logo: AudioWaveform,
-    plan: "Startup",
-  },
-  {
-    name: "Evil Corp.",
-    logo: Command,
-    plan: "Free",
-  },
-]
-
 const adminItems = [
   {
     title: "Users",
@@ -122,7 +95,7 @@ export function AppSidebar({ ...props }) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={teams} />
+        <TeamSwitcher />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

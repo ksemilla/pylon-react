@@ -10,7 +10,7 @@ export function EntityEditPage() {
   const { id = "0" } = useParams()
 
   const { data, error } = useEntity({
-    id: parseInt(id),
+    entityId: parseInt(id),
     queryConfig: getEntityQueryOptions(parseInt(id)),
   })
 
