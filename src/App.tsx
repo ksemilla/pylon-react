@@ -10,14 +10,18 @@ import { Toaster } from "./components/ui/toaster.tsx"
 import { verifyToken } from "./features/auth/api/index.ts"
 import { useAuthStore } from "./stores/auth.ts"
 import { getUser } from "./features/users/api/get-user.ts"
+import { Loader } from "./components/custom/loader.tsx"
+import { getDefaultEntityId } from "./lib/utils.ts"
+import { useEntityStore } from "./stores/entity.ts"
 
 const queryClient = new QueryClient()
 
 export default function App() {
   const authStore = useAuthStore()
+  const entityStore = useEntityStore()
   const token = localStorage.getItem("accessToken")
 
-  useQuery(
+  const { isFetching } = useQuery(
     {
       queryKey: ["auth"],
       enabled: !!token,
@@ -26,8 +30,14 @@ export default function App() {
           const verifyRes = await verifyToken(token ?? "")
           authStore.setUserId(verifyRes.data.userId)
           const userRes = await getUser({ userId: verifyRes.data.userId })
+          console.log(userRes.data)
           authStore.login(userRes.data)
-        } catch {
+
+          const selectedEntityId = getDefaultEntityId(userRes.data)
+          if (selectedEntityId) {
+            entityStore.setEntityId(selectedEntityId)
+          }
+        } catch (err) {
           authStore.logout()
           localStorage.removeItem("accessToken")
         }
@@ -36,6 +46,8 @@ export default function App() {
     },
     queryClient
   )
+
+  if (isFetching) return <Loader />
 
   return (
     <QueryClientProvider client={queryClient}>

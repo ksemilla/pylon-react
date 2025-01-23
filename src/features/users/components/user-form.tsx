@@ -56,7 +56,7 @@ export function UserForm(props: UserForm) {
   })
 
   const onSubmit = (values: z.infer<typeof formUserSchema>) => {
-    props.onSubmit(values)
+    props.onSubmit(values as User)
   }
 
   return (

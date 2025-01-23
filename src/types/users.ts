@@ -1,4 +1,5 @@
 import { Resource } from "./core"
+import { Member } from "./entity"
 
 export const UserRole = {
   SUPERUSER: "superuser",
@@ -16,4 +17,6 @@ export type User = Resource<{
   firebaseUid?: string
   role: (typeof UserRole)[keyof typeof UserRole]
   isActive: boolean
+
+  members: Member[]
 }>

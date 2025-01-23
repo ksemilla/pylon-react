@@ -1,3 +1,4 @@
+import { User } from "@/types/users"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -114,4 +115,11 @@ export const log = (data: any) => {
   if (import.meta.env.DEV) {
     console.log(data)
   }
+}
+
+export const getDefaultEntityId = (user: User) => {
+  const selectedMember = user.members.find((m) => m.default === true)
+  if (user.members.length === 0) return null
+  else if (user.members.length === 1) return user.members[0].entity.id
+  return selectedMember ? selectedMember.entity.id : null
 }
