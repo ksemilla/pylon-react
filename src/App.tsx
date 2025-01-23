@@ -30,7 +30,6 @@ export default function App() {
           const verifyRes = await verifyToken(token ?? "")
           authStore.setUserId(verifyRes.data.userId)
           const userRes = await getUser({ userId: verifyRes.data.userId })
-          console.log(userRes.data)
           authStore.login(userRes.data)
 
           const selectedEntityId = getDefaultEntityId(userRes.data)

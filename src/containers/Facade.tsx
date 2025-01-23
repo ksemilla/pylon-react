@@ -1,7 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { paths } from "@/config/paths"
-import { useEntity } from "@/features/entities/api/get-entity"
 import { useAuthStore } from "@/stores/auth"
 import { useEntityStore } from "@/stores/entity"
 import { LogOut } from "lucide-react"
@@ -15,8 +14,6 @@ type Facade = {
 export function Facade({ children }: Facade) {
   const authStore = useAuthStore()
   const entityStore = useEntityStore()
-
-  const { data } = useEntity({ entityId: entityStore.entityId ?? 0 })
 
   if (authStore.user?.members.length === 0) {
     return <NoTeam />
