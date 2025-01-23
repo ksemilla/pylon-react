@@ -16,13 +16,13 @@ export const getEntityQueryOptions = (entityId: number) => {
 }
 
 type UseEntityOptions = {
-  id: number
+  entityId: number
   queryConfig?: QueryConfig<typeof getEntityQueryOptions>
 }
 
-export const useEntity = ({ id, queryConfig }: UseEntityOptions) => {
+export const useEntity = ({ entityId, queryConfig }: UseEntityOptions) => {
   return useQuery({
-    ...getEntityQueryOptions(id),
+    ...getEntityQueryOptions(entityId),
     ...queryConfig,
   })
 }

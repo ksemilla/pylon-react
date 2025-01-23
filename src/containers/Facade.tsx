@@ -1,9 +1,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { paths } from "@/config/paths"
+import { useEntity } from "@/features/entities/api/get-entity"
 import { useAuthStore } from "@/stores/auth"
-// import { useEntityStore } from "@/stores/entity"
+import { useEntityStore } from "@/stores/entity"
 import { LogOut } from "lucide-react"
+import { useCallback } from "react"
 import { useLocation } from "wouter"
 
 type Facade = {
@@ -12,10 +14,14 @@ type Facade = {
 
 export function Facade({ children }: Facade) {
   const authStore = useAuthStore()
-  // const entityStore = useEntityStore()
+  const entityStore = useEntityStore()
+
+  const { data } = useEntity({ entityId: entityStore.entityId ?? 0 })
 
   if (authStore.user?.members.length === 0) {
     return <NoTeam />
+  } else if (!entityStore.entityId) {
+    return <SelectTeam />
   }
 
   return <>{children}</>
@@ -49,6 +55,34 @@ function NoTeam() {
           <LogOut />
           Log out
         </Button>
+      </div>
+    </div>
+  )
+}
+
+function SelectTeam() {
+  const authStore = useAuthStore()
+  const entityStore = useEntityStore()
+
+  const onSelect = useCallback((entityId: number) => {
+    entityStore.setEntityId(entityId)
+  }, [])
+
+  return (
+    <div className="pt-32">
+      <h1 className="mb-12 text-center text-3xl font-semibold tracking-tight first:mt-0">
+        Select a team
+      </h1>
+      <div className="flex flex-col items-center justify-center space-y-8">
+        {authStore.user?.members.map((m) => (
+          <Button
+            key={m.id}
+            className="p-8 min-w-72"
+            onClick={() => onSelect(m.entity.id)}
+          >
+            {m.entity.name}
+          </Button>
+        ))}
       </div>
     </div>
   )

@@ -118,8 +118,8 @@ export const log = (data: any) => {
 }
 
 export const getDefaultEntityId = (user: User) => {
-  const selectedEntity = user.members.find((e) => e.default === true)
+  const selectedMember = user.members.find((m) => m.default === true)
   if (user.members.length === 0) return null
-  else if (user.members.length === 1) return user.members[0].id
-  return selectedEntity ? selectedEntity.id : null
+  else if (user.members.length === 1) return user.members[0].entity.id
+  return selectedMember ? selectedMember.entity.id : null
 }
