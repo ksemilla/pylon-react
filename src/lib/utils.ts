@@ -1,3 +1,5 @@
+import { MemberPermission } from "@/features/members/permissions"
+import { Member, MemberRole } from "@/types/entity"
 import { User } from "@/types/users"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
@@ -106,7 +108,7 @@ export function parseJwt(token: string): JwtDecoded | null {
 
     return { header, payload }
   } catch (e) {
-    log("Error parsing JWT:")
+    log(e)
     return null
   }
 }
@@ -122,4 +124,13 @@ export const getDefaultEntityId = (user: User) => {
   if (user.members.length === 0) return null
   else if (user.members.length === 1) return user.members[0].entity.id
   return selectedMember ? selectedMember.entity.id : null
+}
+
+export const hasMemberPermission = (
+  member?: Member,
+  permission?: MemberPermission
+): boolean => {
+  if (member?.role === MemberRole.ADMIN) return true
+  else if (!member || !permission) return false
+  return member.permissions.includes(permission)
 }
