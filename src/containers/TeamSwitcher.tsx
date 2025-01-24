@@ -1,4 +1,3 @@
-import * as React from "react"
 import { ChevronsUpDown, GalleryVerticalEnd, Plus } from "lucide-react"
 
 import {
@@ -19,20 +18,24 @@ import {
 import { useAuthStore } from "@/stores/auth"
 import { useEntityStore } from "@/stores/entity"
 import { getEntity } from "@/features/entities/api/get-entity"
+import { useQuery } from "@tanstack/react-query"
 
 export function TeamSwitcher() {
   const { isMobile } = useSidebar()
   const authStore = useAuthStore()
   const entityStore = useEntityStore()
 
-  React.useEffect(() => {
-    ;(async function () {
+  useQuery({
+    enabled: !!entityStore.entityId,
+    queryKey: ["entities", entityStore.entityId],
+    queryFn: async () => {
       try {
         const res = await getEntity({ entityId: entityStore.entityId ?? 0 })
         entityStore.setEntity(res.data)
       } catch {}
-    })()
-  }, [entityStore.entityId])
+      return ""
+    },
+  })
 
   return (
     <SidebarMenu>

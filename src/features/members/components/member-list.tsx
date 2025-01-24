@@ -8,6 +8,8 @@ import { Member } from "@/types/entity"
 import { useMembers } from "../api/get-members"
 import { MemberSearch } from "./member-search"
 import { MemberTable } from "./member-table"
+import { HasMemberPermission } from "@/components/custom/has-member-permission"
+import { MemberPermissionEnum } from "../permissions"
 
 export function MemberListPage() {
   const [_, setLocation] = useLocation()
@@ -31,7 +33,7 @@ export function MemberListPage() {
   }
 
   return (
-    <div>
+    <HasMemberPermission permission={MemberPermissionEnum.MEMBERS_VIEW}>
       <MemberSearch />
       {!data ? (
         <Loader />
@@ -41,6 +43,6 @@ export function MemberListPage() {
           <TablePagination count={data?.data.count} />
         </>
       )}
-    </div>
+    </HasMemberPermission>
   )
 }
