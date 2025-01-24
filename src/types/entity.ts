@@ -21,4 +21,8 @@ export interface Member {
     id: number
     name: string
   }
+  user: {
+    id: number
+    email: string
+  }
 }

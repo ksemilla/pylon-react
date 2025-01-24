@@ -102,7 +102,7 @@ const items: {
   },
   {
     title: "Team",
-    url: "/team",
+    url: "/members",
     icon: Settings,
     permission: MemberPermissionEnum.MEMBERS_VIEW,
   },

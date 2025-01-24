@@ -16,6 +16,9 @@ import { EntityCreatePage } from "./features/entities/components/entity-create"
 import { EntityEditPage } from "./features/entities/components/entity-edit"
 import { PublicContainer } from "./features/auth/components/public-container"
 import { Facade } from "./containers/Facade"
+import { MemberyLayout } from "./features/members/components/member-layout"
+import { MemberCreatePage } from "./features/members/components/member-create"
+import { MemberListPage } from "./features/members/components/member-list"
 
 export function Routes() {
   return (
@@ -35,6 +38,18 @@ export function Routes() {
           <BaseContainer>
             <Route path={paths.home.path}>
               <HomePage />
+            </Route>
+            <Route path={paths.members.base.path} nest>
+              <MemberyLayout>
+                <Switch>
+                  <Route path={paths.members.list.path}>
+                    <MemberListPage />
+                  </Route>
+                  <Route path={paths.members.create.path}>
+                    <MemberCreatePage />
+                  </Route>
+                </Switch>
+              </MemberyLayout>
             </Route>
             <Route path={paths.users.base.path} nest>
               <UserLayout>

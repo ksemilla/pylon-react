@@ -2,19 +2,20 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
 import { cn } from "@/lib/utils"
-import { Entity } from "@/types/entity"
+import { Member } from "@/types/entity"
 
-interface EntityTableProps {
-  entities: Entity[]
-  onRowClick?: (entity: Entity) => void
+interface MemberTableProps {
+  members: Member[]
+  onRowClick?: (member: Member) => void
 }
 
-export function EntityTable({ entities, onRowClick }: EntityTableProps) {
+export function MemberTable({ members, onRowClick }: MemberTableProps) {
   return (
     <Table>
       <TableHeader>
@@ -25,21 +26,27 @@ export function EntityTable({ entities, onRowClick }: EntityTableProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {entities.map((entity) => (
+        {members.map((member) => (
           <TableRow
-            key={entity.id}
+            key={member.id}
             className={cn(
               onRowClick ? "cursor-pointer" : "pointer-events-none"
             )}
             onClick={() => {
-              onRowClick?.(entity)
+              onRowClick?.(member)
             }}
           >
-            <TableCell className="font-medium">{entity.id}</TableCell>
-            <TableCell>{entity.name}</TableCell>
+            <TableCell className="font-medium">{member.id}</TableCell>
+            <TableCell>{member.user.email}</TableCell>
           </TableRow>
         ))}
       </TableBody>
+      <TableFooter>
+        <TableRow>
+          <TableCell>Total</TableCell>
+          <TableCell className="text-right">$2,500.00</TableCell>
+        </TableRow>
+      </TableFooter>
     </Table>
   )
 }

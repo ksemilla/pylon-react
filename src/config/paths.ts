@@ -26,6 +26,11 @@ export const paths = {
     },
   },
 
+  home: {
+    path: "/",
+    getHref: () => "/",
+  },
+
   users: {
     base: {
       path: "/users",
@@ -64,8 +69,22 @@ export const paths = {
     },
   },
 
-  home: {
-    path: "/",
-    getHref: () => "/",
+  members: {
+    base: {
+      path: "/members",
+      getHref: () => "/members",
+    },
+    list: {
+      path: "/",
+      getHref: () => "~/members",
+    },
+    single: {
+      path: "/:id",
+      getHref: (id: string) => `~/members/${id}`,
+    },
+    create: {
+      path: "/create",
+      getHref: () => "~/members/create",
+    },
   },
 }
