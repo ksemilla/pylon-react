@@ -20,7 +20,7 @@ export function EntityTable({ entities, onRowClick }: EntityTableProps) {
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">ID</TableHead>
-          <TableHead>Name</TableHead>
+          <TableHead>Email</TableHead>
           {/* <TableHead className="text-right">Is active</TableHead> */}
         </TableRow>
       </TableHeader>

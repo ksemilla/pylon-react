@@ -1,6 +1,6 @@
 import { MemberPermission } from "@/features/members/permissions"
 import { Member, MemberRole } from "@/types/entity"
-import { User } from "@/types/users"
+import { User, UserRole } from "@/types/users"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -130,7 +130,8 @@ export const hasMemberPermission = (
   member?: Member,
   permission?: MemberPermission
 ): boolean => {
-  if (member?.role === MemberRole.ADMIN) return true
+  if (member?.role === MemberRole.ADMIN || member?.user.role === UserRole.ADMIN)
+    return true
   else if (!member || !permission) return false
   return member.permissions.includes(permission)
 }
