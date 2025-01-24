@@ -3,7 +3,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -51,12 +50,6 @@ export function UserTable({ users, onRowClick, pagination }: UserTableProps) {
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter>
-          <TableRow className="pointer-events-none">
-            <TableCell colSpan={3}>Total</TableCell>
-            <TableCell className="text-right">$2,500.00</TableCell>
-          </TableRow>
-        </TableFooter>
       </Table>
       <div className="mt-2">{pagination}</div>
     </>

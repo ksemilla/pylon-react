@@ -1,3 +1,5 @@
+import { UserRole } from "./users"
+
 export interface Entity {
   id?: number
   name: string
@@ -20,5 +22,10 @@ export interface Member {
   entity: {
     id: number
     name: string
+  }
+  user: {
+    id: number
+    email: string
+    role: (typeof UserRole)[keyof typeof UserRole]
   }
 }
