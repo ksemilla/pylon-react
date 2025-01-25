@@ -19,6 +19,7 @@ export interface Member {
   role: (typeof MemberRole)[keyof typeof MemberRole]
   permissions: string[]
   default: boolean
+  isActive: boolean
   entity: {
     id: number
     name: string

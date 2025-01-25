@@ -9,16 +9,17 @@ import { UserCreatePage } from "@/features/users/components/user-create"
 import { UserEditPage } from "@/features/users/components/user-edit"
 
 import { paths } from "@/config/paths"
-import { UserLayout } from "./features/users/components/user-layout"
-import { EntityListPage } from "./features/entities/components/entity-list"
-import { EntityLayout } from "./features/entities/components/entity-layout"
-import { EntityCreatePage } from "./features/entities/components/entity-create"
-import { EntityEditPage } from "./features/entities/components/entity-edit"
-import { PublicContainer } from "./features/auth/components/public-container"
-import { Facade } from "./containers/Facade"
-import { MemberyLayout } from "./features/members/components/member-layout"
-import { MemberCreatePage } from "./features/members/components/member-create"
-import { MemberListPage } from "./features/members/components/member-list"
+import { UserLayout } from "@/features/users/components/user-layout"
+import { EntityListPage } from "@/features/entities/components/entity-list"
+import { EntityLayout } from "@/features/entities/components/entity-layout"
+import { EntityCreatePage } from "@/features/entities/components/entity-create"
+import { EntityEditPage } from "@/features/entities/components/entity-edit"
+import { PublicContainer } from "@/features/auth/components/public-container"
+import { Facade } from "@/containers/Facade"
+import { MemberyLayout } from "@/features/members/components/member-layout"
+import { MemberCreatePage } from "@/features/members/components/member-create"
+import { MemberListPage } from "@/features/members/components/member-list"
+import { MemberEditpage } from "@/features/members/components/member-edit"
 
 export function Routes() {
   return (
@@ -47,6 +48,9 @@ export function Routes() {
                   </Route>
                   <Route path={paths.members.create.path}>
                     <MemberCreatePage />
+                  </Route>
+                  <Route path={paths.members.single.path}>
+                    <MemberEditpage />
                   </Route>
                 </Switch>
               </MemberyLayout>
