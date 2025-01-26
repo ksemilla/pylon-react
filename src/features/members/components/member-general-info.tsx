@@ -37,16 +37,13 @@ export function MemberGeneralInfo({ member }: MemberGeneralInfoProps) {
 }
 
 function ChangeRole({ member }: { member: Member }) {
-  const [role, setRole] = useState(member.role)
-
-  const onChange = async () => {
+  const onChange = async (role: "admin" | "user") => {
     try {
       const res = await editMember({
         entityId: 35,
         memberId: member.id ?? 0,
         data: {
-          role: member.role === "admin" ? "user" : "admin",
-          isActive: !member.isActive,
+          role,
         },
       })
       console.log("res", res)
@@ -57,10 +54,10 @@ function ChangeRole({ member }: { member: Member }) {
 
   return (
     <Select
-      value={role}
-      onValueChange={(val) => {
-        setRole(val as "admin" | "user")
-        onChange()
+      defaultValue={member.role}
+      onValueChange={(val: "admin" | "user") => {
+        // setRole(val as "admin" | "user")
+        onChange(val)
       }}
     >
       <SelectTrigger>
@@ -79,7 +76,25 @@ function ChangeRole({ member }: { member: Member }) {
 }
 
 function ChangeIsActive({ member }: { member: Member }) {
-  const [isActive, setIsActive] = useState(member.isActive)
+  const onChange = async (isChecked: boolean) => {
+    try {
+      const res = await editMember({
+        entityId: 35,
+        memberId: member.id ?? 0,
+        data: {
+          isActive: isChecked,
+        },
+      })
+      console.log("res", res)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
-  return <Switch checked={isActive} onCheckedChange={(v) => setIsActive(v)} />
+  return (
+    <Switch
+      defaultChecked={member.isActive}
+      onCheckedChange={(v) => onChange(v)}
+    />
+  )
 }
